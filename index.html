@@ -2,9 +2,8 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HadisDigital Premium</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HadisDigital - Premium Emerald Gold</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -15,226 +14,369 @@
 --bg:#F4F7F6;
 --card:#FFFFFF;
 --text:#1B4D3E;
---radius:20px;
+--gradient-emerald:linear-gradient(135deg,#46A29F,#1B4D3E);
+--shadow:0 8px 20px rgba(0,0,0,0.08);
 }
-
+.dark-theme{
+--bg:#0A1613;
+--card:#152A25;
+--primary:#58C4C0;
+--primary-dark:#81E6A4;
+--secondary:#F9E076;
+--text:#E0F2EF;
+}
 body{
 margin:0;
 font-family:'Inter',sans-serif;
-background:var(--bg);
+background-color:var(--bg);
 color:var(--text);
-padding-bottom:90px;
+transition:.3s;
+padding-bottom:100px;
+overflow-x:hidden;
 }
-
 header{
-background:linear-gradient(135deg,#46A29F,#1B4D3E);
+background:var(--gradient-emerald);
 color:white;
-padding:15px;
-text-align:center;
+padding:25px 15px;
+display:flex;
+align-items:center;
 position:sticky;
 top:0;
 z-index:1000;
+border-bottom:4px solid var(--secondary);
+border-radius:0 0 25px 25px;
 }
-
 .container{padding:20px;}
-
-.card{
+.card-kitab{
 background:var(--card);
+border-radius:20px;
 padding:20px;
-border-radius:var(--radius);
 margin-bottom:15px;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-left:7px solid var(--secondary);
+box-shadow:var(--shadow);
+cursor:pointer;
 }
-
 .hadis-box{
 background:var(--card);
-padding:20px;
-border-radius:var(--radius);
-margin-bottom:15px;
-border-bottom:4px solid var(--secondary);
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+border-bottom:5px solid var(--secondary);
+box-shadow:var(--shadow);
 }
-
 .arab{
 font-family:'Amiri',serif;
-font-size:24px;
+font-size:26px;
 direction:rtl;
+line-height:2.2;
 text-align:right;
-line-height:2;
 color:var(--primary-dark);
 }
-
 .bottom-nav{
 position:fixed;
 bottom:0;
 width:100%;
-height:70px;
+height:85px;
 background:var(--card);
 display:flex;
 justify-content:space-around;
 align-items:center;
 border-top:2px solid var(--secondary);
+z-index:1000;
+border-radius:25px 25px 0 0;
 }
-
 .nav-item{
 text-align:center;
-font-size:12px;
+color:#888;
 cursor:pointer;
+font-size:11px;
 flex:1;
 }
-
 .nav-item.active{
 color:var(--primary);
 font-weight:bold;
 }
-
-button{
-cursor:pointer;
-border:none;
-padding:10px 15px;
-border-radius:10px;
-background:var(--primary);
+.nav-item span{
+font-size:24px;
+display:block;
+margin-bottom:4px;
+}
+input,select{
+width:100%;
+padding:15px;
+margin:10px 0;
+border-radius:12px;
+border:1px solid #ddd;
+box-sizing:border-box;
+background:var(--card);
+color:var(--text);
+font-size:16px;
+}
+.btn-gold{
+width:100%;
+padding:15px;
+background:var(--gradient-emerald);
 color:white;
+border:none;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+}
+.modern-list-item{
+background:var(--card);
+padding:15px;
+border-radius:15px;
+margin-bottom:10px;
+border:1px solid #eee;
+display:flex;
+justify-content:space-between;
+cursor:pointer;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-<h3>HADIS DIGITAL</h3>
+<div style="width:40px"></div>
+<div style="flex-grow:1;text-align:center;">
+<h3 style="margin:0;letter-spacing:2px;">HADIS DIGITAL</h3>
+</div>
+<button onclick="document.body.classList.toggle('dark-theme')" style="background:none;border:none;color:white;font-size:22px;cursor:pointer;">🌓</button>
 </header>
 
 <div id="app-content" class="container"></div>
 
 <nav class="bottom-nav">
-<div class="nav-item active" onclick="showHome()">📚<br>Kitab</div>
-<div class="nav-item" onclick="showSearch()">🔍<br>Cari</div>
-<div class="nav-item" onclick="showHarian()">🌟<br>Harian</div>
-<div class="nav-item" onclick="showMenuLainnya()">☰<br>Lainnya</div>
+<div class="nav-item active" onclick="showHome()"><span>📚</span>Kitab</div>
+<div class="nav-item" onclick="showSearch()"><span>🔍</span>Cari</div>
+<div class="nav-item" onclick="showHarian()"><span>🌟</span>Quotes Harian</div>
+<div class="nav-item" onclick="showMenuLainnya()"><span>☰</span>Lainnya</div>
 </nav>
 
 <script>
 
+const API_BASE="https://api.hadith.sutanlab.id";
+
 const books=[
-{id:"bukhari",name:"HR. Bukhari"},
-{id:"muslim",name:"HR. Muslim"},
-{id:"tirmidzi",name:"HR. Tirmidzi"},
-{id:"nasai",name:"HR. Nasai"},
-{id:"abu-daud",name:"HR. Abu Daud"},
-{id:"ibnu-majah",name:"HR. Ibnu Majah"},
-{id:"ahmad",name:"HR. Ahmad"}
+{ id:"bukhari", name:"HR. Bukhari" },
+{ id:"muslim", name:"HR. Muslim" },
+{ id:"tirmidzi", name:"HR. Tirmidzi" },
+{ id:"nasai", name:"HR. Nasai" },
+{ id:"abu-daud", name:"HR. Abu Daud" },
+{ id:"ibnu-majah", name:"HR. Ibnu Majah" },
+{ id:"ahmad", name:"HR. Ahmad" }
 ];
 
 window.onload=()=>showHome();
 
 function updateNav(i){
-document.querySelectorAll('.nav-item')
-.forEach((el,idx)=>el.classList.toggle('active',idx===i));
+document.querySelectorAll('.nav-item').forEach((it,idx)=>it.classList.toggle('active',idx===i));
 }
 
 function showHome(){
 updateNav(0);
-let h="<h3>Daftar Kitab</h3>";
+
+const today = new Date();
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const tanggal = today.toLocaleDateString('id-ID', options);
+
+let h = `
+<div class="hadis-box" style="text-align:center;border:2px solid var(--secondary);">
+<h3 style="margin-top:0;color:var(--primary-dark);">${tanggal}</h3>
+<p style="font-style:italic;color:var(--primary);margin-top:10px;">
+"Ilmu adalah cahaya, dan hadis adalah lentera penerangnya."
+</p>
+</div>
+`;
+
 books.forEach(b=>{
-h+=`<div class="card" onclick="loadBook('${b.id}','${b.name}')">
-<b>${b.name}</b>
+h+=`<div class="card-kitab" onclick="loadBook('${b.id}','${b.name}')">
+<div><b>${b.name}</b></div>
+<div style="color:var(--primary);font-size:20px;">➔</div>
 </div>`;
 });
+
 document.getElementById("app-content").innerHTML=h;
 }
-
 async function loadBook(id,name){
-updateNav(-1);
 const area=document.getElementById("app-content");
-area.innerHTML="Memuat...";
-
+area.innerHTML="<div style='text-align:center;padding:50px;'>Memuat hadis...</div>";
 try{
-const res=await fetch(`https://api.hadith.sutanlab.id/books/${id}?range=1-15`);
+const res=await fetch(`${API_BASE}/books/${id}?range=1-20`);
 const json=await res.json();
-let h=`<button onclick="showHome()">← Kembali</button><h3>${name}</h3>`;
-
+let h=`<button onclick="showHome()" style="background:none;border:none;color:var(--primary);font-weight:bold;padding-bottom:15px;">← KEMBALI</button>
+<h2>${name}</h2>`;
 json.data.hadiths.forEach(item=>{
-h+=`
-<div class="hadis-box">
+h+=`<div class="hadis-box">
 <div class="arab">${item.arab}</div>
-<p>${item.id}</p>
+<p style="margin-top:15px;border-top:1px dashed #ddd;padding-top:15px;">${item.id}</p>
 </div>`;
 });
-
 area.innerHTML=h;
-window.scrollTo(0,0);
-
 }catch(e){
-area.innerHTML="Gagal memuat hadis.";
+area.innerHTML="<div class='hadis-box'>Gagal mengambil data.</div>";
 }
 }
 
 function showSearch(){
 updateNav(1);
-let opts=books.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-
+let opts=books.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
 document.getElementById("app-content").innerHTML=`
-<div class="card">
-<h3>Cari Hadis</h3>
-<select id="kitab">${opts}</select>
-<input type="number" id="nomor" placeholder="Nomor hadis">
-<br><br>
-<button onclick="doSearch()">Cari</button>
+<div class="hadis-box">
+<h3>🔍 Cari Hadis</h3>
+<select id="sKitab">${opts}</select>
+<input type="number" id="sNo" placeholder="Nomor hadis...">
+<button class="btn-gold" onclick="doSearch()">CARI</button>
 </div>
-<div id="hasil"></div>
-`;
+<div id="resSearch"></div>`;
 }
 
 async function doSearch(){
-const k=document.getElementById("kitab").value;
-const n=document.getElementById("nomor").value;
+const k=document.getElementById("sKitab").value;
+const n=document.getElementById("sNo").value;
+const res=document.getElementById("resSearch");
 if(!n)return;
-
-const hasil=document.getElementById("hasil");
-hasil.innerHTML="Mencari...";
-
+res.innerHTML="Mencari...";
 try{
-const res=await fetch(`https://api.hadith.sutanlab.id/books/${k}/${n}`);
-const json=await res.json();
-const d=json.data;
-
-hasil.innerHTML=`
-<div class="hadis-box">
-<div class="arab">${d.contents.arab}</div>
-<p>${d.contents.id}</p>
+const r=await fetch(`${API_BASE}/books/${k}/${n}`);
+const d=await r.json();
+res.innerHTML=`<div class="hadis-box">
+<div class="arab">${d.data.contents.arab}</div>
+<p>${d.data.contents.id}</p>
 </div>`;
-}catch{
-hasil.innerHTML="Hadis tidak ditemukan.";
+}catch(e){
+res.innerHTML="<div class='hadis-box'>Hadis tidak ditemukan.</div>";
 }
 }
 
 function showHarian(){
 updateNav(2);
+
+const teks = "Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain. (HR. Ahmad)";
+
 document.getElementById("app-content").innerHTML=`
-<div class="hadis-box">
-<h3>Hadis Harian</h3>
-<div class="arab">خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ</div>
-<p>Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain. (HR. Ahmad)</p>
+<div class="hadis-box" style="text-align:center;background:var(--gradient-emerald);color:white;border:2px solid var(--secondary);">
+<h3 style="color:var(--secondary)">HADIS HARI INI</h3>
+<div class="arab" style="color:white;">خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ</div>
+<p style="margin-top:15px;">"${teks}"</p>
+
+<button onclick="shareWA('${teks}')" 
+style="margin-top:15px;padding:10px 18px;background:white;color:var(--primary-dark);border:none;border-radius:10px;font-weight:bold;cursor:pointer;">
+📲 Share ke WhatsApp
+</button>
+
 </div>`;
 }
 
 function showMenuLainnya(){
 updateNav(3);
 document.getElementById("app-content").innerHTML=`
-<div class="card">
-<h3>Tentang Aplikasi</h3>
-<p>Aplikasi Hadis Digital versi Premium Emerald Gold.</p>
-</div>
+<div class="modern-list-item" onclick="showTentangKami()"><div><b>ℹ️ Tentang Kami</b></div><span>→</span></div>
+<div class="modern-list-item" onclick="showKontakSaran()"><div><b>💬 Kontak & Saran</b></div><span>→</span></div>
+<div class="modern-list-item" onclick="showDonasi()"><div><b>🎁 Donasi</b></div><span>→</span></div>
+<div class="modern-list-item" onclick="window.open('https://islamicdigitalapp.blogspot.com')"><div><b>🌐 Website</b></div><span>→</span></div>
+<hr><div class="page-header">
+                    <div class="hadis-box">Kritik & Saran</div>
+                    <p style="font-size:12px; opacity:0.9;">Suara Anda sangat berarti bagi kesempurnaan aplikasi ini, </p>
+                </div>`;
+}
 
-<div class="card">
-<h3>Kontak</h3>
-<p>Email: mholis1991@gmail.com</p>
-</div>
+function showTentangKami(){
+document.getElementById("app-content").innerHTML=`
+<button onclick="showMenuLainnya()" style="background:none;border:none;color:var(--primary);font-weight:bold;margin-bottom:15px;">← Kembali</button>
 
-<div class="card">
-<h3>Donasi</h3>
-<p>BCA 6095055005 a.n Muhamad Holis</p>
+<div class="page-header">
+                    <div class="hadis-box">Tentang kami</div>
+                    <p style="font-size:12px; opacity:0.9;">Suara Anda sangat berarti bagi kesempurnaan aplikasi ini<p>~Kami percaya bahwa teknologi adalah sarana dakwah modern. Melalui aplikasi ini, kami berupaya membantu umat Islam 
+mengakses hadis Nabi ﷺ dengan tampilan yang nyaman, bersih, dan bebas gangguan</p>
+                </div>
+
+<div class="hadis-box" style="display:block; border-left:none; padding:25px; border-bottom:5px solid var(--secondary);">
+                    <p style="font-size:13px; margin-bottom:20px; text-align:center; opacity:0.8;">Hadis Digital Premium</b> adalah platform digital yang menghadirkan kumpulan kitab hadis terpercaya seperti 
+Shahih Bukhari, Shahih Muslim, Tirmidzi, Nasai, Abu Daud, Ibnu Majah, dan Musnad Ahmad dalam satu aplikasi yang ringan dan mudah diakses.<p>
+
+<div class="hadis-box" style="display:block; border-left:none; padding:25px; border-bottom:5px solid var(--secondary);">
+                    <p style="font-size:13px; margin-bottom:20px; text-align:center; opacity:0.8;">
+Kami percaya bahwa teknologi adalah sarana dakwah modern. Melalui aplikasi ini, kami berupaya membantu umat Islam 
+mengakses hadis Nabi ﷺ dengan tampilan yang nyaman, bersih, dan bebas gangguan.
+</p>
+
+
+<div>Semoga aplikasi ini menjadi wasilah kebaikan, amal jariyah, dan sumber ilmu yang bermanfaat untuk dunia dan akhirat.
+
 </div>
-`;
+<p style="margin-top:15px;font-style:italic;color:var(--primary);">
+"Khairunnas Anfa'uhum Linnas" — Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya.
+</p>
+
+</div>`;
+}
+function showKontakSaran(){
+document.getElementById("app-content").innerHTML=`
+<div class="container">
+                <button onclick="showMenuLainnya()" style="border:none; background:none; color:var(--primary); padding:15px 0; font-weight:bold; cursor:pointer;">← Kembali</button>
+                <div class="page-header">
+                    <div class="hadis-box">Kritik & Saran</div>
+                    <p style="font-size:12px; opacity:0.9;">Suara Anda sangat berarti bagi kesempurnaan aplikasi ini.</p>
+                </div>
+                <div class="hadis-box" style="display:block; border-left:none; padding:25px; border-bottom:5px solid var(--primary);">
+                    <p style="font-size:13px; margin-bottom:20px; text-align:center; opacity:0.8;">Silahkan hubungi kami melalui saluran berikut untuk memberikan kritik, saran, atau melaporkan kesalahan:</p>
+                    
+                    <a href="https://wa.me/6283803888990?text=Assalamualaikum,%20saya%20ingin%20memberikan%20saran%20untuk%20IslamicDigitalApp" class="contact-btn">
+                        <span style="font-size:20px;">📱</span> WhatsApp: 083803888990
+                    </a>
+                    
+                    <a href="mailto:mholis1991@gmail.com?subject=Saran%20IslamicDigitalApp" class="contact-btn">
+                        <span style="font-size:20px;">📧</span> Email: mholis1991@gmail.com
+                    </a>
+
+                    <div style="margin-top:20px; text-align:center; border-top:1px solid #eee; padding-top:15px;">
+                        <small style="font-style:italic; color:var(--primary);">Jazakumullah Khairan Katsiran</small>
+                    </div>
+                </div>
+            </div>`;
+    }
+function showDonasi(){
+document.getElementById("app-content").innerHTML=`
+<button onclick="showMenuLainnya()" style="background:none;border:none;color:var(--primary);font-weight:bold;margin-bottom:15px;">← Kembali</button>
+
+<div class="page-header">
+                    <div class="hadis-box">Donasi Pengembangan</div>
+                    <p style="font-size:12px; opacity:0.9;">donasi Anda sangat berarti bagi kesempurnaan aplikasi ini.</p>
+                </div>
+
+<div class="hadis-box" style="display:block; border-left:none; padding:25px; border-bottom:5px solid var(--primary);">
+                    <p style="font-size:13px; margin-bottom:20px; text-align:center; opacity:0.8;">
+Aplikasi ini dikembangkan sebagai bentuk kontribusi dakwah digital. 
+Untuk menjaga aplikasi tetap aktif, bebas iklan, dan terus berkembang, kami membuka kesempatan bagi Anda yang ingin berpartisipasi melalui donasi.
+</p>
+
+<p style="line-height:1.7;text-align:justify;">
+Setiap donasi yang Anda berikan akan digunakan untuk:
+<ul style="margin-top:10px;">
+<li>Pengembangan fitur baru</li>
+<li>Perawatan server & API</li>
+<li>Peningkatan stabilitas sistem</li>
+<li>Penyebaran dakwah digital</li>
+</ul>
+</p>
+
+<hr style="margin:15px 0;opacity:0.3;">
+
+<p><b>Transfer Bank (BCA)</b><br>
+No Rekening: <b>6095055005</b><br>
+a.n Muhamad Holis
+</p>
+
+<p style="margin-top:15px;font-style:italic;color:var(--primary);">
+Semoga setiap rupiah yang Anda infaqkan menjadi amal jariyah yang terus mengalir pahalanya.
+</p>
+
+</div>`;
 }
 
 </script>
