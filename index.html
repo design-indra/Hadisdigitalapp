@@ -207,29 +207,110 @@
             </div>`;
     }
 
+    // --- MENU LAINNYA ---
     function showMenuLainnya() {
-        updateNav(3);
+        updateActiveNav(3);
         document.getElementById('app-content').innerHTML = `
-            <div class="modern-item" onclick="alert('Hadis Digital v2.0 Premium')"><b>ℹ️ Tentang Aplikasi</b><span>➔</span></div>
-            <div class="modern-item" onclick="window.open('https://wa.me/6283803888990')"><b>💬 Kontak Pengembang</b><span>➔</span></div>
-            <div class="modern-item" onclick="showDonasi()"><b>🎁 Donasi Infaq</b><span>➔</span></div>
-            <div class="hadis-box" style="font-size:12px; opacity:0.7;">
-                <b>Disclaimer:</b> Data hadis diambil dari API hadits.site. Pastikan merujuk ke kitab asli untuk verifikasi mendalam.
-            </div>
-            <p style="text-align:center; font-size:10px; opacity:0.5; margin-top:20px;">© 2026 IslamicDigital</p>
-        `;
+            <div class="container">
+                <div class="modern-list">
+                    <div class="modern-list-item" onclick="showTentangKami()">
+                        <div><b>ℹ️ Tentang Kami</b><br><small style="opacity:0.6;">Misi & Visi Aplikasi</small></div>
+                        <span>→</span>
+                    </div>
+                    <div class="modern-list-item" onclick="showKontakSaran()">
+                        <div><b>💬 Kontak & Saran</b><br><small style="opacity:0.6;">Kirim kritik & saran Anda</small></div>
+                        <span>→</span>
+                    </div>
+                    <div class="modern-list-item" onclick="showDonasi()">
+                        <div><b>🎁 Donasi Pengembangan</b><br><small style="opacity:0.6;">Dukung keberlanjutan aplikasi</small></div>
+                        <span>→</span>
+                    </div>
+                    <div class="modern-list-item" onclick="window.open('https://islamicdigitalapp.blogspot.com')">
+                        <div><b>🌐 Website & Blog</b><br><small style="opacity:0.6;">Informasi terbaru kami</small></div>
+                        <span>→</span>
+                    </div>
+                </div>
+                <p style="text-align:center; font-size:10px; margin-top:30px; opacity:0.5;">Version 2.0 Premium © 2026 IslamicDigitalApp all right reserved</p>
+            </div>`;
+    }
+
+    function showTentangKami() {
+        document.getElementById('app-content').innerHTML = `
+            <div class="container">
+                <button onclick="showMenuLainnya()" style="border:none; background:none; color:var(--primary); padding:15px 0; font-weight:bold; cursor:pointer;">← Kembali</button>
+                <div class="page-header">
+                    <div class="quote-box">"Khairunnas Anfa'uhum Linnas"</div>
+                    <p style="font-size:12px; font-style:italic; opacity:0.9;">Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain.</p>
+                </div>
+                <div class="card" style="display:block; border-left:none; border-bottom:5px solid var(--secondary);">
+                    <h3 style="color:var(--primary-dark); margin-top:0;">Visi Kami</h3>
+                    <p style="font-size:13px; line-height:1.7; text-align:justify; opacity:0.8;">
+                        IslamicDigitalApp lahir dari niat tulus untuk mendekatkan Al-Qur'an ke genggaman setiap hamba Allah di era modern. Kami percaya bahwa teknologi adalah jembatan menuju keberkahan jika digunakan untuk menyebarkan kalam Ilahi.
+                    </p>
+                    <h3 style="color:var(--primary-dark);">Misi Premium</h3>
+                    <p style="font-size:13px; line-height:1.7; text-align:justify; opacity:0.8;">
+                        Menghadirkan pengalaman membaca Al-Qur'an yang tenang, tanpa gangguan iklan, dengan estetika Emerald & Gold yang memanjakan mata, serta kemudahan akses murottal dari Qori ternama dunia, data Sumber Al-Quran dari equran. id Dijamin ke aslian nya.
+                    </p>
+                    <h3 style="color:var(--primary-dark);">Disclaimer on</h3>
+<p style="font-size:13px; line-height:1.7; text-align:justify; opacity:0.8;"> Semua data Al-Quran digital ini menggunakan data digital Al-Qur'an yang bersumberkan daripada API EQuran.id (oleh equran.id). Semua teks Arab, transliterasi (Latin), terjemahan Bahasa Indonesia, dan fail audio murottal adalah berdasarkan pangkalan data tersebut yang terus dikemas kini secara berkala.
+                </div>
+            </div>`;
+    }
+
+    function showKontakSaran() {
+        document.getElementById('app-content').innerHTML = `
+            <div class="container">
+                <button onclick="showMenuLainnya()" style="border:none; background:none; color:var(--primary); padding:15px 0; font-weight:bold; cursor:pointer;">← Kembali</button>
+                <div class="page-header">
+                    <div class="quote-box">Kritik & Saran</div>
+                    <p style="font-size:12px; opacity:0.9;">Suara Anda sangat berarti bagi kesempurnaan aplikasi ini.</p>
+                </div>
+                <div class="card" style="display:block; border-left:none; padding:25px; border-bottom:5px solid var(--primary);">
+                    <p style="font-size:13px; margin-bottom:20px; text-align:center; opacity:0.8;">Silahkan hubungi kami melalui saluran berikut untuk memberikan kritik, saran, atau melaporkan kesalahan:</p>
+                    
+                    <a href="https://wa.me/6283803888990?text=Assalamualaikum,%20saya%20ingin%20memberikan%20saran%20untuk%20IslamicDigitalApp" class="contact-btn">
+                        <span style="font-size:20px;">📱</span> WhatsApp: 083803888990
+                    </a>
+                    
+                    <a href="mailto:mholis1991@gmail.com?subject=Saran%20IslamicDigitalApp" class="contact-btn">
+                        <span style="font-size:20px;">📧</span> Email: mholis1991@gmail.com
+                    </a>
+
+                    <div style="margin-top:20px; text-align:center; border-top:1px solid #eee; padding-top:15px;">
+                        <small style="font-style:italic; color:var(--primary);">Jazakumullah Khairan Katsiran</small>
+                    </div>
+                </div>
+            </div>`;
     }
 
     function showDonasi() {
         document.getElementById('app-content').innerHTML = `
-            <button onclick="showMenuLainnya()" style="background:none; border:none; color:var(--primary); font-weight:bold;">← Kembali</button>
-            <div class="hadis-box" style="text-align:center;">
-                <h3>Infaq Jariyah</h3>
-                <p style="font-size:13px;">BCA: <b>6095055005</b><br>a.n Muhamad Holis</p>
-                <p style="font-size:11px; opacity:0.6;">Bantuan Anda membantu aplikasi tetap gratis & tanpa iklan.</p>
-            </div>
-        `;
-    }
+            <div class="container">
+                <button onclick="showMenuLainnya()" style="border:none; background:none; color:var(--primary); padding:15px 0; font-weight:bold; cursor:pointer;">← Kembali</button>
+                <div class="card" style="display:block; text-align:center; padding:30px; border-left:none; border-top:5px solid var(--secondary);">
+                    <h3 style="color:var(--primary-dark); margin-top:0;">Infaq Jariyah</h3>
+                    <p style="font-size:13px; opacity:0.7;">Sedekah Anda membantu kami menjaga aplikasi tetap bebas iklan selamanya.</p>
+                    <div style="margin:20px 0; text-align: center;">
+    <p style="font-size:11px; font-weight:bold; color:var(--latin); margin-bottom: 10px;">SCAN QRIS DISINI</p>
+    
+    <img src="https://lh3.googleusercontent.com/u/0/d/1oBVpUR4s_mOAp4EcUbi25hb49MIA3yRf=w1000-h1000" 
+         class="qris-img" 
+         alt="QRIS Donasi"
+         style="width: 250px; height: 250px; object-fit: contain; border: 5px solid white; border-radius: 15px;">
+</div>
+
+
+                    <div style="background:rgba(70,162,159,0.05); padding:15px; border-radius:15px; border:1px solid #eee; text-align:left;">
+                        <small style="color:var(--primary); font-weight:bold;">BCA (Transfer Manual)</small>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <b style="font-size:18px;">6095055005</b>
+                            <button onclick="navigator.clipboard.writeText('6095055005'); alert('Disalin!')" style="background:var(--primary); color:white; border:none; padding:5px 10px; border-radius:8px; font-size:11px;">SALIN</button>
+                        </div>
+                        <small>a.n Muhamad Holis</small>
+                    </div>
+                </div>
+            </div>`;
+                                          }
 </script>
 </body>
 </html>
