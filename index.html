@@ -1070,13 +1070,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Render home langsung
   showHome();
   // Sembunyikan splash setelah 0.2 detik (cukup untuk font load)
-  setTimeout(hideSplash, 200);
+  setTimeout(hideSplash, 10);
 });
 
 // Fallback jika DOMContentLoaded sudah lewat
 if(document.readyState === 'interactive' || document.readyState === 'complete'){
   showHome();
-  setTimeout(hideSplash, 200);
+  setTimeout(hideSplash, 10);
 }
 </script>
 </body>
