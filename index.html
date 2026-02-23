@@ -7,891 +7,934 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="HadisDigital">
-<link rel="manifest" id="pwa-manifest">
-<title>HadisDigital Premium v3</title>
+<title>HadisDigital Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<!-- PWA Manifest & Icon (embedded SVG as base64) -->
+<link rel="apple-touch-icon" id="apple-icon">
+<link rel="icon" id="fav-icon">
+
 <style>
 :root{
-  --primary:#3D9970;--primary-dark:#1B4D3E;--primary-light:#A8D5BA;
-  --secondary:#C9A84C;--secondary-light:#F0D080;
-  --bg:#F0F5F2;--card:#FFFFFF;--text:#1B3A2F;--text-muted:#7A9A8A;
-  --gradient-main:linear-gradient(135deg,#2E7D5E,#1B4D3E);
-  --gradient-gold:linear-gradient(135deg,#C9A84C,#F0D080,#C9A84C);
-  --shadow-sm:0 2px 8px rgba(27,77,62,0.08);
-  --shadow-md:0 6px 20px rgba(27,77,62,0.12);
-  --shadow-lg:0 12px 40px rgba(27,77,62,0.18);
-  --radius:18px;--radius-sm:12px;
+  --p:#3D9970;--pd:#1B4D3E;--pl:#A8D5BA;
+  --s:#C9A84C;--sl:#F0D080;
+  --bg:#F0F5F2;--card:#fff;--tx:#1B3A2F;--txm:#7A9A8A;
+  --gm:linear-gradient(135deg,#2E7D5E,#1B4D3E);
+  --gg:linear-gradient(135deg,#C9A84C,#F0D080,#C9A84C);
+  --sh:0 2px 8px rgba(27,77,62,.08);
+  --shm:0 6px 20px rgba(27,77,62,.12);
+  --r:18px;--rs:12px;
 }
-.dark-theme{
-  --bg:#0D1F18;--card:#162B22;--primary:#4DBD8A;--primary-dark:#6DDAA4;
-  --primary-light:#2A5040;--secondary:#E8C15A;--text:#D8EEE6;--text-muted:#7AAA90;
-}
+.dk{--bg:#0D1F18;--card:#162B22;--p:#4DBD8A;--pd:#6DDAA4;--pl:#2A5040;--s:#E8C15A;--tx:#D8EEE6;--txm:#7AAA90;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
-body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;padding-bottom:110px;overflow-x:hidden;min-height:100vh;}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--tx);transition:background .3s,color .3s;padding-bottom:110px;overflow-x:hidden;min-height:100vh;}
 
 /* HEADER */
-header{background:var(--gradient-main);color:white;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--secondary);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+header{background:var(--gm);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--s);box-shadow:0 4px 20px rgba(0,0,0,.2);}
 .logo{display:flex;align-items:center;gap:10px;}
-.logo-icon{width:36px;height:36px;background:var(--gradient-gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
-.logo-title{font-family:'Playfair Display',serif;font-size:17px;letter-spacing:1px;}
-.logo-sub{font-size:9px;opacity:0.7;letter-spacing:2px;text-transform:uppercase;}
-.header-right{display:flex;gap:8px;}
-.btn-icon{background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:background .2s;}
-.btn-icon:hover{background:rgba(255,255,255,0.28);}
+.logo-ic{width:36px;height:36px;background:var(--gg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.logo-t{font-family:'Playfair Display',serif;font-size:17px;letter-spacing:1px;}
+.logo-s{font-size:9px;opacity:.7;letter-spacing:2px;text-transform:uppercase;}
+.hdr-r{display:flex;gap:8px;}
+.bic{background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:background .2s;}
+.bic:hover{background:rgba(255,255,255,.28);}
+.bic.active-lang{background:rgba(255,255,255,.35);box-shadow:0 0 0 2px var(--s);}
 
 /* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:85px;background:var(--card);display:flex;justify-content:space-around;align-items:center;border-top:1px solid rgba(201,168,76,0.3);z-index:999;border-radius:24px 24px 0 0;box-shadow:0 -4px 20px rgba(27,77,62,0.1);padding-bottom:env(safe-area-inset-bottom);}
-.nav-item{text-align:center;color:var(--text-muted);cursor:pointer;font-size:10px;flex:1;padding:8px 4px;transition:color .2s;font-weight:500;}
-.nav-item.active{color:var(--primary);}
-.nav-icon{font-size:21px;display:block;margin-bottom:3px;transition:transform .2s;}
-.nav-item.active .nav-icon{transform:scale(1.15);}
-.nav-dot{width:4px;height:4px;background:var(--secondary);border-radius:50%;margin:2px auto 0;display:none;}
-.nav-item.active .nav-dot{display:block;}
+.bnav{position:fixed;bottom:0;left:0;right:0;height:85px;background:var(--card);display:flex;justify-content:space-around;align-items:center;border-top:1px solid rgba(201,168,76,.3);z-index:999;border-radius:24px 24px 0 0;box-shadow:0 -4px 20px rgba(27,77,62,.1);padding-bottom:env(safe-area-inset-bottom);}
+.ni{text-align:center;color:var(--txm);cursor:pointer;font-size:10px;flex:1;padding:8px 4px;transition:color .2s;font-weight:500;}
+.ni.on{color:var(--p);}
+.ni-ic{font-size:21px;display:block;margin-bottom:3px;transition:transform .2s;}
+.ni.on .ni-ic{transform:scale(1.15);}
+.ni-dot{width:4px;height:4px;background:var(--s);border-radius:50%;margin:2px auto 0;display:none;}
+.ni.on .ni-dot{display:block;}
 
-/* HAMBURGER PANEL */
-.ham-overlay{position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:0;transition:opacity .3s;}
-.ham-overlay.open{pointer-events:all;opacity:1;}
-.ham-bg{position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);}
-.ham-panel{position:absolute;top:0;right:0;width:285px;height:100%;background:var(--card);padding:28px 18px;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-10px 0 40px rgba(0,0,0,0.2);}
-.ham-overlay.open .ham-panel{transform:translateX(0);}
-.ham-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px;padding-bottom:18px;border-bottom:2px solid var(--secondary);}
-.ham-item{display:flex;align-items:center;gap:12px;padding:13px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:6px;transition:background .2s;font-size:14px;font-weight:500;}
-.ham-item:hover{background:var(--bg);}
-.ham-icon{width:38px;height:38px;background:var(--gradient-main);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
-.ham-divider{height:1px;background:rgba(0,0,0,0.08);margin:8px 0;}
-
-/* CONTAINER */
-.container{padding:16px;}
-
-/* HERO */
-.hero-card{background:var(--gradient-main);border-radius:22px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden;border:2px solid rgba(201,168,76,0.35);box-shadow:var(--shadow-md);}
-.hero-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,0.05);border-radius:50%;}
-.hero-date{font-size:11px;color:var(--secondary-light);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-.hero-quote{font-style:italic;color:rgba(255,255,255,0.88);font-size:13px;line-height:1.7;position:relative;z-index:1;}
-
-/* SHOLAT CARD */
-.sholat-card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:16px;box-shadow:var(--shadow-sm);border-left:4px solid var(--secondary);}
-.sholat-title{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
-.sholat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
-.sholat-item{text-align:center;padding:8px 4px;border-radius:10px;background:var(--bg);}
-.sholat-item.aktif{background:var(--gradient-main);color:white;}
-.sholat-name{font-size:10px;font-weight:700;margin-bottom:3px;}
-.sholat-time{font-size:12px;font-weight:700;color:var(--primary);}
-.sholat-item.aktif .sholat-time{color:var(--secondary-light);}
-.sholat-item.aktif .sholat-name{color:rgba(255,255,255,0.8);}
-.sholat-loc{font-size:10px;color:var(--text-muted);margin-top:6px;text-align:right;}
-
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
-.stat-card{background:var(--card);border-radius:var(--radius-sm);padding:13px 10px;text-align:center;box-shadow:var(--shadow-sm);border-top:3px solid var(--secondary);}
-.stat-num{font-size:20px;font-weight:700;color:var(--primary);font-family:'Playfair Display',serif;}
-.stat-label{font-size:10px;color:var(--text-muted);margin-top:3px;}
-
-/* SECTION TITLE */
-.sec-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--primary-dark);margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
-.sec-title::after{content:'';flex:1;height:2px;background:linear-gradient(to right,var(--secondary),transparent);border-radius:2px;}
-
-/* BOOKS GRID */
-.books-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
-.book-card{background:var(--card);border-radius:var(--radius);padding:16px 12px;cursor:pointer;border:1.5px solid transparent;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden;text-align:center;}
-.book-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gradient-gold);border-radius:var(--radius) var(--radius) 0 0;}
-.book-card:active{transform:scale(0.97);}
-.book-emoji{font-size:26px;display:block;margin-bottom:5px;}
-.book-name{font-weight:700;font-size:13px;color:var(--text);margin-bottom:3px;}
-.book-count{font-size:11px;color:var(--text-muted);}
-
-/* NUMBER GRID */
-.num-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:16px;}
-.num-btn{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--primary-light);background:var(--card);color:var(--primary-dark);transition:all .2s;box-shadow:var(--shadow-sm);}
-.num-btn:hover,.num-btn:active{background:var(--gradient-main);color:white;border-color:transparent;transform:scale(1.1);}
-.num-btn.read{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
-
-/* HADIS BOX */
-.hadis-box{background:var(--card);padding:20px;border-radius:var(--radius);margin-bottom:12px;border-bottom:4px solid var(--secondary);box-shadow:var(--shadow-sm);position:relative;animation:fadeUp .3s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.h-badge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--gradient-main);color:white;border-radius:50%;font-size:12px;font-weight:700;float:left;margin-right:10px;margin-top:2px;box-shadow:0 3px 8px rgba(27,77,62,0.3);}
-.h-tag{display:inline-block;background:rgba(201,168,76,0.12);color:var(--secondary);border:1px solid rgba(201,168,76,0.3);padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;float:right;}
-.arab{font-family:'Amiri',serif;font-size:23px;direction:rtl;line-height:2.3;text-align:right;color:var(--primary-dark);clear:both;margin-bottom:12px;padding:12px;background:linear-gradient(135deg,rgba(61,153,112,0.05),rgba(201,168,76,0.05));border-radius:var(--radius-sm);border-right:3px solid var(--secondary);}
-.h-trans{font-size:13px;line-height:1.8;color:var(--text-muted);border-top:1px dashed rgba(0,0,0,0.08);padding-top:10px;margin-top:0;}
-.h-trans-en{font-size:12px;line-height:1.7;color:var(--text-muted);border-top:1px dashed rgba(0,0,0,0.06);padding-top:8px;font-style:italic;display:none;}
-.h-trans-en.show{display:block;}
-.h-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
-.h-btn{flex:1;min-width:60px;padding:7px 5px;border:1.5px solid var(--primary-light);background:transparent;color:var(--primary);border-radius:var(--radius-sm);font-size:11px;cursor:pointer;transition:all .2s;font-family:'Tajawal',sans-serif;font-weight:600;white-space:nowrap;}
-.h-btn:hover,.h-btn:active{background:var(--primary);color:white;border-color:var(--primary);}
-.h-btn.bookmarked{background:rgba(201,168,76,0.15);border-color:var(--secondary);color:var(--secondary);}
-
-/* AUDIO PLAYER */
-.audio-bar{background:var(--card);border-radius:var(--radius-sm);padding:12px 15px;margin-bottom:12px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm);border:1.5px solid var(--primary-light);}
-.audio-play{width:38px;height:38px;background:var(--gradient-main);border:none;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:white;}
-.audio-info{flex:1;}
-.audio-title{font-size:12px;font-weight:700;margin-bottom:2px;}
-.audio-sub{font-size:10px;color:var(--text-muted);}
-.audio-progress{width:100%;height:4px;background:var(--primary-light);border-radius:2px;overflow:hidden;margin-top:6px;}
-.audio-fill{height:100%;background:var(--gradient-main);width:0%;transition:width .3s;border-radius:2px;}
-
-/* SEARCH */
-.search-box{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow-sm);}
-.search-box h3{margin:0 0 12px;font-family:'Playfair Display',serif;}
-input,select{width:100%;padding:13px 15px;margin:7px 0;border-radius:var(--radius-sm);border:1.5px solid rgba(61,153,112,0.2);background:var(--bg);color:var(--text);font-size:15px;font-family:'Tajawal',sans-serif;outline:none;transition:border-color .2s;}
-input:focus,select:focus{border-color:var(--primary);}
-.btn-primary{width:100%;padding:13px;background:var(--gradient-main);color:white;border:none;border-radius:var(--radius-sm);font-weight:700;font-size:15px;cursor:pointer;font-family:'Tajawal',sans-serif;margin-top:4px;box-shadow:0 4px 12px rgba(27,77,62,0.25);transition:opacity .2s,transform .2s;}
-.btn-primary:active{opacity:0.9;transform:scale(0.99);}
-
-/* HARIAN */
-.harian-card{background:var(--gradient-main);border-radius:22px;padding:24px;text-align:center;border:2px solid rgba(201,168,76,0.45);box-shadow:var(--shadow-lg);color:white;margin-bottom:14px;position:relative;overflow:hidden;}
-.harian-card::before{content:'"';position:absolute;top:-20px;left:10px;font-size:110px;font-family:Georgia,serif;opacity:0.07;line-height:1;}
-.q-arab{font-family:'Amiri',serif;font-size:26px;direction:rtl;line-height:2.2;color:var(--secondary-light);margin-bottom:12px;}
-.h-tag-pill{display:inline-block;background:rgba(201,168,76,0.28);color:var(--secondary-light);padding:3px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;}
-
-/* DOA */
-.doa-box{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:10px;box-shadow:var(--shadow-sm);border-left:4px solid var(--primary);}
-.doa-title{font-weight:700;font-size:14px;margin-bottom:8px;color:var(--primary-dark);}
-.doa-arab{font-family:'Amiri',serif;font-size:20px;direction:rtl;line-height:2.1;text-align:right;color:var(--primary-dark);background:rgba(61,153,112,0.05);padding:10px;border-radius:var(--radius-sm);margin-bottom:8px;}
-.doa-latin{font-size:12px;font-style:italic;color:var(--text-muted);margin-bottom:5px;line-height:1.7;}
-.doa-arti{font-size:13px;color:var(--text);line-height:1.7;padding-top:8px;border-top:1px dashed rgba(0,0,0,0.08);}
-
-/* LOADING/ERROR */
-.loading{text-align:center;padding:55px 20px;}
-.spinner{width:42px;height:42px;border:4px solid var(--primary-light);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.error-card{background:var(--card);border-radius:var(--radius);padding:28px;text-align:center;border-left:5px solid #e74c3c;box-shadow:var(--shadow-sm);}
-
-/* BACK BTN */
-.back-btn{display:flex;align-items:center;gap:8px;background:none;border:none;color:var(--primary);font-weight:700;padding:10px 0;font-size:15px;cursor:pointer;margin-bottom:8px;font-family:'Tajawal',sans-serif;}
-
-/* BOOKMARK EMPTY */
-.bm-empty{text-align:center;padding:50px 20px;color:var(--text-muted);}
-
-/* PAGINATION */
-.pagination{display:flex;gap:8px;justify-content:center;margin:12px 0;}
-.page-btn{padding:7px 14px;border:1.5px solid var(--primary-light);background:var(--card);color:var(--primary);border-radius:var(--radius-sm);cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:600;transition:all .2s;}
-.page-btn.active,.page-btn:hover{background:var(--gradient-main);color:white;border-color:transparent;}
-
-/* MENU LIST */
-.menu-li{background:var(--card);padding:14px;border-radius:var(--radius-sm);margin-bottom:9px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s;}
-.menu-li:active{transform:scale(0.99);}
-.menu-li-left{display:flex;align-items:center;gap:12px;}
-.menu-li-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--primary-light),var(--primary));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-
-/* LANG TOGGLE */
-.lang-toggle{display:flex;gap:6px;margin-bottom:10px;}
-.lang-btn{padding:5px 14px;border:1.5px solid var(--primary-light);background:transparent;color:var(--primary);border-radius:20px;font-size:12px;cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:600;transition:all .2s;}
-.lang-btn.active{background:var(--primary);color:white;border-color:var(--primary);}
+/* SIDE MENU */
+.smo{position:fixed;inset:0;z-index:2000;pointer-events:none;opacity:0;transition:opacity .3s;}
+.smo.on{pointer-events:all;opacity:1;}
+.smb{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);}
+.smp{position:absolute;top:0;right:0;width:280px;height:100%;background:var(--card);padding:26px 16px;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-10px 0 40px rgba(0,0,0,.2);}
+.smo.on .smp{transform:translateX(0);}
+.smh{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:16px;border-bottom:2px solid var(--s);}
+.smi{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--rs);cursor:pointer;margin-bottom:5px;transition:background .2s;font-size:14px;font-weight:500;}
+.smi:hover{background:var(--bg);}
+.sm-ic{width:36px;height:36px;background:var(--gm);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.smd{height:1px;background:rgba(0,0,0,.08);margin:8px 0;}
 
 /* SHARE MODAL */
-.share-modal{position:fixed;inset:0;z-index:3000;pointer-events:none;opacity:0;transition:opacity .2s;}
-.share-modal.open{pointer-events:all;opacity:1;}
-.share-bg{position:absolute;inset:0;background:rgba(0,0,0,0.5);}
-.share-panel{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;padding:24px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);}
-.share-modal.open .share-panel{transform:translateY(0);}
-.share-title{font-family:'Playfair Display',serif;font-size:16px;text-align:center;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.08);}
-.share-options{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.share-opt{text-align:center;cursor:pointer;padding:12px 8px;border-radius:var(--radius-sm);transition:background .2s;}
-.share-opt:hover{background:var(--bg);}
-.share-opt-icon{font-size:30px;display:block;margin-bottom:5px;}
-.share-opt-label{font-size:10px;font-weight:600;color:var(--text-muted);}
+.shmo{position:fixed;inset:0;z-index:3000;pointer-events:none;opacity:0;transition:opacity .2s;}
+.shmo.on{pointer-events:all;opacity:1;}
+.shmb{position:absolute;inset:0;background:rgba(0,0,0,.5);}
+.shmp{position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;padding:22px;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);}
+.shmo.on .shmp{transform:translateY(0);}
+.shmt{font-family:'Playfair Display',serif;font-size:16px;text-align:center;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,.08);}
+.shmo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.shmopt{text-align:center;cursor:pointer;padding:12px 6px;border-radius:var(--rs);transition:background .15s;border:1.5px solid transparent;}
+.shmopt:hover,.shmopt:active{background:var(--bg);border-color:var(--pl);}
+.shmopt-ic{font-size:28px;display:block;margin-bottom:5px;}
+.shmopt-lb{font-size:10px;font-weight:700;color:var(--txm);}
+
+/* CONTAINER */
+.wrap{padding:14px;}
+
+/* HERO */
+.hero{background:var(--gm);border-radius:22px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden;border:2px solid rgba(201,168,76,.35);box-shadow:var(--shm);}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:150px;height:150px;background:rgba(255,255,255,.05);border-radius:50%;}
+.hero-d{font-size:11px;color:var(--sl);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.hero-q{font-style:italic;color:rgba(255,255,255,.88);font-size:13px;line-height:1.7;position:relative;z-index:1;}
+
+/* STATS */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px;}
+.sc{background:var(--card);border-radius:var(--rs);padding:12px 8px;text-align:center;box-shadow:var(--sh);border-top:3px solid var(--s);}
+.sn{font-size:20px;font-weight:700;color:var(--p);font-family:'Playfair Display',serif;}
+.sl2{font-size:10px;color:var(--txm);margin-top:3px;}
+
+/* SEC TITLE */
+.stl{font-family:'Playfair Display',serif;font-size:16px;color:var(--pd);margin:14px 0 10px;display:flex;align-items:center;gap:8px;}
+.stl::after{content:'';flex:1;height:2px;background:linear-gradient(to right,var(--s),transparent);border-radius:2px;}
+
+/* BOOKS GRID */
+.bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:14px;}
+.bc{background:var(--card);border-radius:var(--r);padding:15px 11px;cursor:pointer;border:1.5px solid transparent;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden;text-align:center;}
+.bc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gg);border-radius:var(--r) var(--r) 0 0;}
+.bc:active{transform:scale(.97);}
+.bc-em{font-size:25px;display:block;margin-bottom:5px;}
+.bc-nm{font-weight:700;font-size:13px;color:var(--tx);margin-bottom:3px;}
+.bc-ct{font-size:11px;color:var(--txm);}
+
+/* NUMBER GRID */
+.ngrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:14px;}
+.nb{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--pl);background:var(--card);color:var(--pd);transition:all .2s;box-shadow:var(--sh);}
+.nb:hover,.nb:active{background:var(--gm);color:#fff;border-color:transparent;transform:scale(1.1);}
+.nb.rd{background:var(--pl);border-color:var(--p);}
+
+/* HADIS BOX */
+.hbox{background:var(--card);padding:18px;border-radius:var(--r);margin-bottom:11px;border-bottom:4px solid var(--s);box-shadow:var(--sh);animation:fu .3s ease;}
+@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.hbadge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--gm);color:#fff;border-radius:50%;font-size:12px;font-weight:700;float:left;margin-right:10px;margin-top:1px;box-shadow:0 3px 8px rgba(27,77,62,.3);}
+.htag{display:inline-block;background:rgba(201,168,76,.12);color:var(--s);border:1px solid rgba(201,168,76,.3);padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;float:right;}
+.arab{font-family:'Amiri',serif;font-size:23px;direction:rtl;line-height:2.3;text-align:right;color:var(--pd);clear:both;margin-bottom:11px;padding:11px;background:linear-gradient(135deg,rgba(61,153,112,.05),rgba(201,168,76,.05));border-radius:var(--rs);border-right:3px solid var(--s);}
+.htx{font-size:13px;line-height:1.8;color:var(--txm);border-top:1px dashed rgba(0,0,0,.08);padding-top:9px;}
+.hacts{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;}
+.hbtn{flex:1;min-width:55px;padding:7px 4px;border:1.5px solid var(--pl);background:transparent;color:var(--p);border-radius:var(--rs);font-size:11px;cursor:pointer;transition:all .2s;font-family:'Tajawal',sans-serif;font-weight:600;}
+.hbtn:hover,.hbtn:active{background:var(--p);color:#fff;border-color:var(--p);}
+.hbtn.bmd{background:rgba(201,168,76,.12);border-color:var(--s);color:var(--s);}
+.hbtn.red{border-color:#e74c3c;color:#e74c3c;}
+.hbtn.red:hover{background:#e74c3c;color:#fff;}
+
+/* SHOLAT */
+.scard{background:var(--card);border-radius:var(--r);padding:15px;margin-bottom:14px;box-shadow:var(--sh);border-left:4px solid var(--s);}
+.sgrid2{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;}
+.si{text-align:center;padding:8px 3px;border-radius:9px;background:var(--bg);}
+.si.ak{background:var(--gm);color:#fff;}
+.si-nm{font-size:10px;font-weight:700;margin-bottom:3px;}
+.si-tm{font-size:12px;font-weight:700;color:var(--p);}
+.si.ak .si-tm{color:var(--sl);}
+.si.ak .si-nm{color:rgba(255,255,255,.8);}
+
+/* DOA BOX */
+.dbox{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:10px;box-shadow:var(--sh);border-left:4px solid var(--p);}
+.dtl{font-weight:700;font-size:14px;margin-bottom:8px;color:var(--pd);}
+.darab{font-family:'Amiri',serif;font-size:20px;direction:rtl;line-height:2.1;text-align:right;color:var(--pd);background:rgba(61,153,112,.05);padding:9px;border-radius:var(--rs);margin-bottom:7px;}
+.dlat{font-size:12px;font-style:italic;color:var(--txm);margin-bottom:5px;line-height:1.7;}
+.darti{font-size:13px;color:var(--tx);line-height:1.7;padding-top:8px;border-top:1px dashed rgba(0,0,0,.08);}
+
+/* HARIAN */
+.hcard{background:var(--gm);border-radius:22px;padding:22px;text-align:center;border:2px solid rgba(201,168,76,.45);box-shadow:0 12px 40px rgba(27,77,62,.18);color:#fff;margin-bottom:14px;position:relative;overflow:hidden;}
+.hcard::before{content:'"';position:absolute;top:-20px;left:10px;font-size:110px;font-family:Georgia,serif;opacity:.07;line-height:1;}
+.qar{font-family:'Amiri',serif;font-size:26px;direction:rtl;line-height:2.2;color:var(--sl);margin-bottom:11px;}
+.hpill{display:inline-block;background:rgba(201,168,76,.28);color:var(--sl);padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:11px;text-transform:uppercase;}
+.wbtn{padding:9px 16px;background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:25px;font-weight:700;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:13px;transition:background .2s;}
+.wbtn:hover{background:rgba(255,255,255,.3);}
+
+/* SEARCH */
+.sbox{background:var(--card);border-radius:var(--r);padding:17px;margin-bottom:13px;box-shadow:var(--sh);}
+.sbox h3{margin:0 0 11px;font-family:'Playfair Display',serif;}
+input,select{width:100%;padding:12px 14px;margin:7px 0;border-radius:var(--rs);border:1.5px solid rgba(61,153,112,.2);background:var(--bg);color:var(--tx);font-size:15px;font-family:'Tajawal',sans-serif;outline:none;transition:border-color .2s;}
+input:focus,select:focus{border-color:var(--p);}
+.btnp{width:100%;padding:13px;background:var(--gm);color:#fff;border:none;border-radius:var(--rs);font-weight:700;font-size:15px;cursor:pointer;font-family:'Tajawal',sans-serif;margin-top:4px;box-shadow:0 4px 12px rgba(27,77,62,.25);transition:opacity .2s,transform .2s;}
+.btnp:active{opacity:.9;transform:scale(.99);}
+
+/* LOADING / ERROR */
+.ld{text-align:center;padding:55px 20px;}
+.sp{width:40px;height:40px;border:4px solid var(--pl);border-top-color:var(--p);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 13px;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.ecard{background:var(--card);border-radius:var(--r);padding:26px;text-align:center;border-left:5px solid #e74c3c;box-shadow:var(--sh);}
+
+/* BACK BTN */
+.bkbtn{display:flex;align-items:center;gap:8px;background:none;border:none;color:var(--p);font-weight:700;padding:10px 0;font-size:15px;cursor:pointer;font-family:'Tajawal',sans-serif;}
+
+/* PAGINATION */
+.pgn{display:flex;gap:7px;justify-content:center;margin:11px 0;}
+.pb{padding:7px 13px;border:1.5px solid var(--pl);background:var(--card);color:var(--p);border-radius:var(--rs);cursor:pointer;font-family:'Tajawal',sans-serif;font-weight:600;transition:all .2s;}
+.pb.on,.pb:hover{background:var(--gm);color:#fff;border-color:transparent;}
+
+/* MENU LIST */
+.mli{background:var(--card);padding:13px;border-radius:var(--rs);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:var(--sh);transition:transform .15s;}
+.mli:active{transform:scale(.99);}
+.mlil{display:flex;align-items:center;gap:11px;}
+.mlic{width:34px;height:34px;background:linear-gradient(135deg,var(--pl),var(--p));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:105px;left:50%;transform:translateX(-50%);background:#1B4D3E;color:#fff;padding:10px 20px;border-radius:25px;font-size:13px;z-index:9999;font-family:'Tajawal',sans-serif;box-shadow:0 4px 15px rgba(0,0,0,.25);transition:opacity .3s;white-space:nowrap;max-width:90vw;text-align:center;opacity:0;pointer-events:none;}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo">
-    <div class="logo-icon">📖</div>
+    <div class="logo-ic">📖</div>
     <div>
-      <div class="logo-title">HadisDigital</div>
-      <div class="logo-sub">Premium v3</div>
+      <div class="logo-t">HadisDigital</div>
+      <div class="logo-s">Premium v4</div>
     </div>
   </div>
-  <div class="header-right">
-    <button class="btn-icon" onclick="toggleLang()" title="Bahasa" id="langBtn">🇮🇩</button>
-    <button class="btn-icon" onclick="toggleTheme()" title="Tema">🌓</button>
-    <button class="btn-icon" onclick="openMenu()">☰</button>
+  <div class="hdr-r">
+    <button class="bic" id="langBtn" onclick="toggleLang()" title="Ganti Bahasa">🇮🇩</button>
+    <button class="bic" onclick="toggleTheme()" title="Ganti Tema">🌓</button>
+    <button class="bic" onclick="openMenu()">☰</button>
   </div>
 </header>
 
-<!-- HAMBURGER -->
-<div class="ham-overlay" id="hamMenu">
-  <div class="ham-bg" onclick="closeMenu()"></div>
-  <div class="ham-panel">
-    <div class="ham-head">
+<!-- SIDE MENU -->
+<div class="smo" id="sideMenu">
+  <div class="smb" onclick="closeMenu()"></div>
+  <div class="smp">
+    <div class="smh">
       <div>
         <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;">Menu</div>
-        <div style="font-size:10px;color:var(--text-muted);">HadisDigital Premium</div>
+        <div style="font-size:10px;color:var(--txm);">HadisDigital Premium</div>
       </div>
-      <button class="btn-icon" style="background:var(--bg);color:var(--text);" onclick="closeMenu()">✕</button>
+      <button class="bic" style="background:var(--bg);color:var(--tx);" onclick="closeMenu()">✕</button>
     </div>
-    <div class="ham-item" onclick="closeMenu();showDoa()"><div class="ham-icon">🤲</div><div><div style="font-weight:700;">Doa Harian</div><div style="font-size:11px;color:var(--text-muted);">Doa sehari-hari</div></div></div>
-    <div class="ham-item" onclick="closeMenu();showSholat()"><div class="ham-icon">🕌</div><div><div style="font-weight:700;">Waktu Sholat</div><div style="font-size:11px;color:var(--text-muted);">Jadwal sholat hari ini</div></div></div>
-    <div class="ham-item" onclick="closeMenu();showBookmark()"><div class="ham-icon">🔖</div><div><div style="font-weight:700;">Bookmark</div><div style="font-size:11px;color:var(--text-muted);">Hadis tersimpan</div></div></div>
-    <div class="ham-item" onclick="closeMenu();showReadHistory()"><div class="ham-icon">📜</div><div><div style="font-weight:700;">Riwayat Baca</div><div style="font-size:11px;color:var(--text-muted);">Terakhir dibaca</div></div></div>
-    <div class="ham-divider"></div>
-    <div class="ham-item" onclick="closeMenu();showTentangKami()"><div class="ham-icon">ℹ️</div><div><div style="font-weight:700;">Tentang Kami</div></div></div>
-    <div class="ham-item" onclick="closeMenu();showKontakSaran()"><div class="ham-icon">💬</div><div><div style="font-weight:700;">Kontak & Saran</div></div></div>
-    <div class="ham-item" onclick="closeMenu();showDonasi()"><div class="ham-icon">🎁</div><div><div style="font-weight:700;">Donasi</div></div></div>
-    <div class="ham-item" onclick="installPWA()"><div class="ham-icon">📱</div><div><div style="font-weight:700;">Install App</div><div style="font-size:11px;color:var(--text-muted);">Pasang ke layar utama</div></div></div>
-    <div class="ham-item" onclick="window.open('https://islamicdigitalapp.blogspot.com')"><div class="ham-icon">🌐</div><div><div style="font-weight:700;">Website</div></div></div>
-    <div class="ham-divider"></div>
-    <div style="padding:12px;text-align:center;font-size:11px;color:var(--text-muted);">v3.0 · © 2025 HadisDigital<br><span style="color:var(--primary);font-style:italic;">Jazakumullah Khairan</span></div>
+    <div class="smi" onclick="closeMenu();showDoa()"><div class="sm-ic">🤲</div><div><div style="font-weight:700;">Doa Harian</div><div style="font-size:11px;color:var(--txm)">Doa sehari-hari lengkap</div></div></div>
+    <div class="smi" onclick="closeMenu();showSholat()"><div class="sm-ic">🕌</div><div><div style="font-weight:700;">Waktu Sholat</div><div style="font-size:11px;color:var(--txm)">Jadwal sholat hari ini</div></div></div>
+    <div class="smi" onclick="closeMenu();showBookmark()"><div class="sm-ic">🔖</div><div><div style="font-weight:700;">Bookmark</div><div style="font-size:11px;color:var(--txm)">Hadis tersimpan</div></div></div>
+    <div class="smi" onclick="closeMenu();showHistory()"><div class="sm-ic">📜</div><div><div style="font-weight:700;">Riwayat Baca</div><div style="font-size:11px;color:var(--txm)">Hadis yang pernah dibaca</div></div></div>
+    <div class="smd"></div>
+    <div class="smi" onclick="closeMenu();showTentang()"><div class="sm-ic">ℹ️</div><div><div style="font-weight:700;">Tentang Kami</div></div></div>
+    <div class="smi" onclick="closeMenu();showKontak()"><div class="sm-ic">💬</div><div><div style="font-weight:700;">Kontak & Saran</div></div></div>
+    <div class="smi" onclick="closeMenu();showDonasi()"><div class="sm-ic">🎁</div><div><div style="font-weight:700;">Donasi</div></div></div>
+    <div class="smi" onclick="closeMenu();doInstallPWA()"><div class="sm-ic">📱</div><div><div style="font-weight:700;">Install App</div><div style="font-size:11px;color:var(--txm)">Pasang ke layar utama</div></div></div>
+    <div class="smi" onclick="window.open('https://islamicdigitalapp.blogspot.com')"><div class="sm-ic">🌐</div><div><div style="font-weight:700;">Website</div></div></div>
+    <div class="smd"></div>
+    <div style="padding:10px;text-align:center;font-size:11px;color:var(--txm);">v4.0 · © 2025 HadisDigital<br><span style="color:var(--p);font-style:italic;">Jazakumullah Khairan</span></div>
   </div>
 </div>
 
 <!-- SHARE MODAL -->
-<div class="share-modal" id="shareModal">
-  <div class="share-bg" onclick="closeShare()"></div>
-  <div class="share-panel">
-    <div class="share-title">📤 Bagikan Hadis</div>
-    <div class="share-options">
-      <div class="share-opt" onclick="doShare('wa')"><span class="share-opt-icon">💬</span><span class="share-opt-label">WhatsApp</span></div>
-      <div class="share-opt" onclick="doShare('tg')"><span class="share-opt-icon">✈️</span><span class="share-opt-label">Telegram</span></div>
-      <div class="share-opt" onclick="doShare('copy')"><span class="share-opt-icon">📋</span><span class="share-opt-label">Salin Teks</span></div>
-      <div class="share-opt" onclick="doShare('native')"><span class="share-opt-icon">📲</span><span class="share-opt-label">Lainnya</span></div>
+<div class="shmo" id="shareMo">
+  <div class="shmb" onclick="closeShare()"></div>
+  <div class="shmp">
+    <div class="shmt">📤 Bagikan Hadis</div>
+    <div class="shmo-grid">
+      <div class="shmopt" onclick="doShare('wa')"><span class="shmopt-ic">💬</span><span class="shmopt-lb">WhatsApp</span></div>
+      <div class="shmopt" onclick="doShare('tg')"><span class="shmopt-ic">✈️</span><span class="shmopt-lb">Telegram</span></div>
+      <div class="shmopt" onclick="doShare('copy')"><span class="shmopt-ic">📋</span><span class="shmopt-lb">Salin Teks</span></div>
+      <div class="shmopt" onclick="doShare('native')"><span class="shmopt-ic">📲</span><span class="shmopt-lb">Lainnya</span></div>
     </div>
   </div>
 </div>
 
 <!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <div class="nav-item active" onclick="showHome()"><span class="nav-icon">📚</span>Kitab<div class="nav-dot"></div></div>
-  <div class="nav-item" onclick="showSearch()"><span class="nav-icon">🔍</span>Cari<div class="nav-dot"></div></div>
-  <div class="nav-item" onclick="showHarian()"><span class="nav-icon">🌟</span>Harian<div class="nav-dot"></div></div>
-  <div class="nav-item" onclick="showDoa()"><span class="nav-icon">🤲</span>Doa<div class="nav-dot"></div></div>
-  <div class="nav-item" onclick="showBookmark()"><span class="nav-icon">🔖</span>Simpan<div class="nav-dot"></div></div>
+<nav class="bnav">
+  <div class="ni on" id="nav0" onclick="showHome()"><span class="ni-ic">📚</span>Kitab<div class="ni-dot"></div></div>
+  <div class="ni" id="nav1" onclick="showSearch()"><span class="ni-ic">🔍</span>Cari<div class="ni-dot"></div></div>
+  <div class="ni" id="nav2" onclick="showHarian()"><span class="ni-ic">🌟</span>Harian<div class="ni-dot"></div></div>
+  <div class="ni" id="nav3" onclick="showDoa()"><span class="ni-ic">🤲</span>Doa<div class="ni-dot"></div></div>
+  <div class="ni" id="nav4" onclick="showBookmark()"><span class="ni-ic">🔖</span>Simpan<div class="ni-dot"></div></div>
 </nav>
 
-<div id="app" class="container"></div>
+<div id="app" class="wrap"></div>
+<div id="toast"></div>
 
 <script>
-// ============================================================
-// CONFIG
-// ============================================================
-const API = "https://api.hadith.gading.dev";
-const PRAYER_API = "https://api.aladhan.com/v1/timingsByCity";
+// ─────────────────────────────────────────────
+// DATA STORE – semua teks hadis disimpan di sini
+// ─────────────────────────────────────────────
+const STORE = {}; // key = "bookId_number" => {arab, id_text, en_text, bookName}
+let sharePayload = ''; // teks aktif untuk share modal
+let deferredPWA = null;
+const API = 'https://api.hadith.gading.dev';
 
-const books = [
-  {id:"bukhari",   full:"HR. Bukhari",   emoji:"📗", total:7563},
-  {id:"muslim",    full:"HR. Muslim",    emoji:"📘", total:3033},
-  {id:"tirmidzi",  full:"HR. Tirmidzi",  emoji:"📙", total:3956},
-  {id:"nasai",     full:"HR. Nasai",     emoji:"📕", total:5662},
-  {id:"abu-daud",  full:"HR. Abu Daud",  emoji:"📓", total:5274},
-  {id:"ibnu-majah",full:"HR. Ibnu Majah",emoji:"📒", total:4341},
-  {id:"ahmad",     full:"HR. Ahmad",     emoji:"📔", total:4305}
+const BOOKS = [
+  {id:'bukhari',   full:'HR. Bukhari',   em:'📗', total:7563},
+  {id:'muslim',    full:'HR. Muslim',    em:'📘', total:3033},
+  {id:'tirmidzi',  full:'HR. Tirmidzi',  em:'📙', total:3956},
+  {id:'nasai',     full:'HR. Nasai',     em:'📕', total:5662},
+  {id:'abu-daud',  full:'HR. Abu Daud',  em:'📓', total:5274},
+  {id:'ibnu-majah',full:'HR. Ibnu Majah',em:'📒', total:4341},
+  {id:'ahmad',     full:'HR. Ahmad',     em:'📔', total:4305}
 ];
 
-const harianData = [
-  {arab:"خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ",id:"Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain.",en:"The best people are those who are most beneficial to others.",sumber:"HR. Ahmad"},
-  {arab:"طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",id:"Menuntut ilmu adalah kewajiban bagi setiap muslim.",en:"Seeking knowledge is an obligation upon every Muslim.",sumber:"HR. Ibnu Majah"},
-  {arab:"اَلْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُوْنَ مِنْ لِسَانِهِ وَيَدِهِ",id:"Muslim sejati adalah orang yang kaum muslimin selamat dari lisan dan tangannya.",en:"A true Muslim is one from whose tongue and hand other Muslims are safe.",sumber:"HR. Bukhari"},
-  {arab:"لَا تَغْضَبْ وَلَكَ الْجَنَّةُ",id:"Jangan marah, maka bagimu surga.",en:"Do not get angry, and you shall have Paradise.",sumber:"HR. Thabrani"},
-  {arab:"الدِّيْنُ النَّصِيْحَةُ",id:"Agama itu adalah nasihat.",en:"Religion is sincere advice.",sumber:"HR. Muslim"},
-  {arab:"مَنْ صَمَتَ نَجَا",id:"Barangsiapa diam, maka ia selamat.",en:"Whoever remains silent is saved.",sumber:"HR. Tirmidzi"},
-  {arab:"إِنَّ اللهَ جَمِيْلٌ يُحِبُّ الْجَمَالَ",id:"Sesungguhnya Allah itu indah dan mencintai keindahan.",en:"Indeed, Allah is beautiful and loves beauty.",sumber:"HR. Muslim"}
+const HARIAN = [
+  {arab:'خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ', id:'Sebaik-baik manusia adalah yang paling bermanfaat bagi orang lain.', en:'The best of people are those who are most beneficial to others.', src:'HR. Ahmad'},
+  {arab:'طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ', id:'Menuntut ilmu adalah kewajiban bagi setiap muslim.', en:'Seeking knowledge is an obligation upon every Muslim.', src:'HR. Ibnu Majah'},
+  {arab:'اَلْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُوْنَ مِنْ لِسَانِهِ وَيَدِهِ', id:'Muslim sejati adalah orang yang kaum muslimin selamat dari lisan dan tangannya.', en:'A true Muslim is one from whose tongue and hand other Muslims are safe.', src:'HR. Bukhari'},
+  {arab:'لَا تَغْضَبْ وَلَكَ الْجَنَّةُ', id:'Jangan marah, maka bagimu surga.', en:'Do not get angry, and Paradise is yours.', src:'HR. Thabrani'},
+  {arab:'الدِّيْنُ النَّصِيْحَةُ', id:'Agama itu adalah nasihat.', en:'Religion is sincere advice.', src:'HR. Muslim'},
+  {arab:'مَنْ صَمَتَ نَجَا', id:'Barangsiapa diam, maka ia selamat.', en:'Whoever remains silent is saved.', src:'HR. Tirmidzi'},
+  {arab:'إِنَّ اللهَ جَمِيْلٌ يُحِبُّ الْجَمَالَ', id:'Sesungguhnya Allah itu indah dan mencintai keindahan.', en:'Indeed, Allah is beautiful and loves beauty.', src:'HR. Muslim'}
 ];
 
-const doaData = [
-  {title:"Doa Bangun Tidur",arab:"اَلْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُوْرُ",latin:"Alhamdulillahilladzii ahyaanaa ba'da maa amaatanaa wa ilaihin nusyuur.",arti:"Segala puji bagi Allah yang telah menghidupkan kami kembali setelah Dia mematikan kami, dan kepada-Nya lah kami dikembalikan."},
-  {title:"Doa Sebelum Makan",arab:"بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ",latin:"Bismillahi wa 'alaa barakatillah.",arti:"Dengan nama Allah dan atas berkah Allah."},
-  {title:"Doa Sesudah Makan",arab:"اَلْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِيْنَ",latin:"Alhamdulillahilladzii ath'amanaa wa saqaanaa wa ja'alanaa muslimiin.",arti:"Segala puji bagi Allah yang telah memberi kami makan, memberi kami minum, dan menjadikan kami muslim."},
-  {title:"Doa Masuk Masjid",arab:"اَللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",latin:"Allahumma iftah lii abwaaba rahmatik.",arti:"Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu."},
-  {title:"Doa Keluar Masjid",arab:"اَللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",latin:"Allahumma innii as'aluka min fadhlika.",arti:"Ya Allah, sesungguhnya aku memohon kepada-Mu dari karunia-Mu."},
-  {title:"Doa Sebelum Tidur",arab:"بِاسْمِكَ اللَّهُمَّ أَمُوْتُ وَأَحْيَا",latin:"Bismikallaahumma amuutu wa ahyaa.",arti:"Dengan nama-Mu ya Allah, aku mati dan aku hidup."},
-  {title:"Doa Masuk Kamar Mandi",arab:"اَللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",latin:"Allahumma innii a'uudzubika minal khubutsi wal khabaits.",arti:"Ya Allah, aku berlindung kepada-Mu dari setan laki-laki dan setan perempuan."},
-  {title:"Doa Keluar Kamar Mandi",arab:"غُفْرَانَكَ",latin:"Ghufraanaka.",arti:"Aku memohon ampunan-Mu."},
-  {title:"Doa Naik Kendaraan",arab:"سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِيْنَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُوْنَ",latin:"Subhanalladzi sakhkhara lanaa haadzaa wa maa kunnaa lahu muqriniin. Wa innaa ilaa rabbinaa lamunqalibuun.",arti:"Maha Suci Allah yang telah menundukkan semua ini bagi kami, padahal kami sebelumnya tidak mampu menguasainya. Dan sesungguhnya kami akan kembali kepada Rabb kami."},
-  {title:"Doa Ketika Hujan",arab:"اَللَّهُمَّ صَيِّبًا نَافِعًا",latin:"Allahumma shayyiban naafi'aa.",arti:"Ya Allah, jadikanlah hujan ini hujan yang membawa manfaat."}
+const DOA = [
+  {t:'Doa Bangun Tidur', arab:'اَلْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُوْرُ', lat:'Alhamdulillahilladzii ahyaanaa ba\'da maa amaatanaa wa ilaihin nusyuur.', arti:'Segala puji bagi Allah yang telah menghidupkan kami setelah Dia mematikan kami, dan kepada-Nya lah kami kembali.'},
+  {t:'Doa Sebelum Makan', arab:'بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ', lat:'Bismillahi wa \'alaa barakatillah.', arti:'Dengan nama Allah dan atas berkah Allah.'},
+  {t:'Doa Sesudah Makan', arab:'اَلْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِيْنَ', lat:'Alhamdulillahilladzii ath\'amanaa wa saqaanaa wa ja\'alanaa muslimiin.', arti:'Segala puji bagi Allah yang telah memberi kami makan, minum, dan menjadikan kami muslim.'},
+  {t:'Doa Masuk Masjid', arab:'اَللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ', lat:'Allahumma iftah lii abwaaba rahmatik.', arti:'Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu.'},
+  {t:'Doa Keluar Masjid', arab:'اَللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ', lat:'Allahumma innii as\'aluka min fadhlika.', arti:'Ya Allah, sesungguhnya aku memohon kepada-Mu dari karunia-Mu.'},
+  {t:'Doa Sebelum Tidur', arab:'بِاسْمِكَ اللَّهُمَّ أَمُوْتُ وَأَحْيَا', lat:'Bismikallaahumma amuutu wa ahyaa.', arti:'Dengan nama-Mu ya Allah, aku mati dan aku hidup.'},
+  {t:'Doa Masuk Kamar Mandi', arab:'اَللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ', lat:'Allahumma innii a\'uudzubika minal khubutsi wal khabaits.', arti:'Ya Allah, aku berlindung kepada-Mu dari setan laki-laki dan perempuan.'},
+  {t:'Doa Keluar Kamar Mandi', arab:'غُفْرَانَكَ', lat:'Ghufraanaka.', arti:'Aku memohon ampunan-Mu.'},
+  {t:'Doa Naik Kendaraan', arab:'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِيْنَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُوْنَ', lat:'Subhanalladzi sakhkhara lanaa haadzaa wa maa kunnaa lahu muqriniin. Wa innaa ilaa rabbinaa lamunqalibuun.', arti:'Maha Suci Allah yang telah menundukkan ini bagi kami. Dan sesungguhnya kami akan kembali kepada Rabb kami.'},
+  {t:'Doa Ketika Hujan', arab:'اَللَّهُمَّ صَيِّبًا نَافِعًا', lat:'Allahumma shayyiban naafi\'aa.', arti:'Ya Allah, jadikanlah hujan ini membawa manfaat.'}
 ];
 
-// ============================================================
+// ─────────────────────────────────────────────
 // STATE
-// ============================================================
-let bookmarks = [];
-let readHistory = [];
-let currentBook = null;
-let currentPage = 1;
-let currentLang = 'id';
-let currentShareText = '';
-let deferredPrompt = null;
-const PAGE_SIZE = 50;
+// ─────────────────────────────────────────────
+let BM = [];
+let HIST = [];
+let LANG = 'id';
+let PAGE_SIZE = 50;
+let curBook = null;
+let curPage = 1;
 
-// Load from localStorage safely
-try{ bookmarks = JSON.parse(localStorage.getItem('hd_bm')||'[]'); }catch(e){}
-try{ readHistory = JSON.parse(localStorage.getItem('hd_hist')||'[]'); }catch(e){}
-try{ currentLang = localStorage.getItem('hd_lang')||'id'; }catch(e){}
-try{ if(localStorage.getItem('hd_dark')==='1') document.body.classList.add('dark-theme'); }catch(e){}
+try { BM = JSON.parse(localStorage.getItem('hd4_bm') || '[]'); } catch(e){}
+try { HIST = JSON.parse(localStorage.getItem('hd4_hist') || '[]'); } catch(e){}
+try { LANG = localStorage.getItem('hd4_lang') || 'id'; } catch(e){}
+try { if(localStorage.getItem('hd4_dk')==='1') document.body.classList.add('dk'); } catch(e){}
 
-// ============================================================
-// THEME & LANG
-// ============================================================
-function toggleTheme(){
-  document.body.classList.toggle('dark-theme');
-  try{localStorage.setItem('hd_dark',document.body.classList.contains('dark-theme')?'1':'0');}catch(e){}
-}
-function toggleLang(){
-  currentLang = currentLang==='id'?'en':'id';
-  try{localStorage.setItem('hd_lang',currentLang);}catch(e){}
-  document.getElementById('langBtn').textContent = currentLang==='id'?'🇮🇩':'🇬🇧';
-  showToast(currentLang==='id'?'Bahasa: Indonesia 🇮🇩':'Language: English 🇬🇧');
-}
 // Set lang button
-document.getElementById('langBtn').textContent = currentLang==='id'?'🇮🇩':'🇬🇧';
+document.getElementById('langBtn').textContent = LANG==='id' ? '🇮🇩' : '🇬🇧';
 
-// ============================================================
+// ─────────────────────────────────────────────
+// THEME & LANG
+// ─────────────────────────────────────────────
+function toggleTheme(){
+  document.body.classList.toggle('dk');
+  try { localStorage.setItem('hd4_dk', document.body.classList.contains('dk') ? '1' : '0'); } catch(e){}
+}
+
+function toggleLang(){
+  LANG = LANG==='id' ? 'en' : 'id';
+  try { localStorage.setItem('hd4_lang', LANG); } catch(e){}
+  const btn = document.getElementById('langBtn');
+  btn.textContent = LANG==='id' ? '🇮🇩' : '🇬🇧';
+  btn.classList.toggle('active-lang', LANG==='en');
+  toast(LANG==='id' ? '🇮🇩 Bahasa Indonesia' : '🇬🇧 English Mode');
+
+  // Refresh halaman saat ini jika sedang baca hadis
+  if(curBook){
+    loadBook(curBook.id, curBook.full, curBook.total, curPage);
+  } else {
+    // Refresh harian jika sedang di sana
+    const nav2 = document.getElementById('nav2');
+    if(nav2 && nav2.classList.contains('on')) showHarian();
+  }
+}
+
+// ─────────────────────────────────────────────
 // MENU
-// ============================================================
-function openMenu(){ document.getElementById('hamMenu').classList.add('open'); }
-function closeMenu(){ document.getElementById('hamMenu').classList.remove('open'); }
+// ─────────────────────────────────────────────
+function openMenu(){ document.getElementById('sideMenu').classList.add('on'); }
+function closeMenu(){ document.getElementById('sideMenu').classList.remove('on'); }
 
-// ============================================================
+// ─────────────────────────────────────────────
 // NAV
-// ============================================================
-function updateNav(i){
-  document.querySelectorAll('.nav-item').forEach((el,idx)=>el.classList.toggle('active',idx===i));
+// ─────────────────────────────────────────────
+function setNav(i){
+  for(let n=0; n<5; n++) document.getElementById('nav'+n).classList.toggle('on', n===i);
 }
 
-// ============================================================
-// SHARE SYSTEM (FIXED)
-// ============================================================
-function openShare(text){
-  currentShareText = text;
-  document.getElementById('shareModal').classList.add('open');
+// ─────────────────────────────────────────────
+// SHARE SYSTEM — FIXED
+// Semua teks disimpan di sharePayload (string),
+// tidak di-encode ke HTML attribute
+// ─────────────────────────────────────────────
+function openShare(key){
+  // key bisa berupa STORE key ("bukhari_1") atau string langsung untuk DOA/HARIAN
+  if(STORE[key]){
+    const d = STORE[key];
+    const tx = LANG==='en' && d.en ? d.en : d.id;
+    sharePayload = d.arab + '\n\n"' + tx + '"\n\n(' + d.bookName + ' No. ' + d.num + ')';
+  } else {
+    // key adalah index DOA atau HARIAN
+    sharePayload = key; // sudah berupa teks langsung
+  }
+  document.getElementById('shareMo').classList.add('on');
 }
+
+function openShareText(txt){
+  sharePayload = txt;
+  document.getElementById('shareMo').classList.add('on');
+}
+
 function closeShare(){
-  document.getElementById('shareModal').classList.remove('open');
+  document.getElementById('shareMo').classList.remove('on');
 }
+
 function doShare(type){
-  const text = currentShareText;
-  const msg = `📖 HadisDigital\n\n${text}\n\n_Dikirim via HadisDigital Premium_`;
+  const msg = '📖 HadisDigital\n\n' + sharePayload + '\n\n_Dikirim via HadisDigital Premium_';
   closeShare();
-  if(type==='wa'){
-    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-  } else if(type==='tg'){
-    window.open('https://t.me/share/url?text='+encodeURIComponent(msg),'_blank');
-  } else if(type==='copy'){
-    salinTeks(text);
-  } else if(type==='native'){
+  if(type === 'wa'){
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  } else if(type === 'tg'){
+    window.open('https://t.me/share/url?text=' + encodeURIComponent(msg), '_blank');
+  } else if(type === 'copy'){
+    copyText(sharePayload);
+  } else if(type === 'native'){
     if(navigator.share){
-      navigator.share({title:'HadisDigital',text:msg}).catch(()=>{});
+      navigator.share({ title:'HadisDigital', text: msg }).catch(()=>{});
     } else {
-      salinTeks(text);
+      copyText(sharePayload);
     }
   }
 }
 
-// ============================================================
-// COPY (FIXED — tidak memakai encode/decode chain yang rusak)
-// ============================================================
-function salinTeks(text){
-  // Method 1: Clipboard API modern
-  if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text)
-      .then(()=>showToast('✅ Berhasil disalin!'))
-      .catch(()=>salinFallback(text));
-  } else {
-    salinFallback(text);
+// ─────────────────────────────────────────────
+// COPY — FIXED dengan 2 metode fallback
+// ─────────────────────────────────────────────
+function copyText(txt){
+  if(!txt){ toast('⚠️ Tidak ada teks untuk disalin.'); return; }
+
+  // Metode 1: Clipboard API (modern browser)
+  if(navigator.clipboard && typeof navigator.clipboard.writeText === 'function'){
+    navigator.clipboard.writeText(txt)
+      .then(() => toast('✅ Teks berhasil disalin!'))
+      .catch(() => copyFallback(txt));
+    return;
   }
+  copyFallback(txt);
 }
-function salinFallback(text){
-  // Method 2: execCommand fallback (untuk browser lama & WebView)
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
-  document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
-  try{
+
+function copyFallback(txt){
+  // Metode 2: execCommand (WebView lama, iOS Safari lama)
+  const el = document.createElement('textarea');
+  el.value = txt;
+  el.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;';
+  document.body.appendChild(el);
+  el.focus();
+  el.select();
+  try {
     const ok = document.execCommand('copy');
-    showToast(ok ? '✅ Berhasil disalin!' : '⚠️ Salin gagal, coba manual.');
-  }catch(e){
-    showToast('⚠️ Salin gagal, coba manual.');
+    toast(ok ? '✅ Teks berhasil disalin!' : '⚠️ Gagal menyalin. Coba tahan teks lalu salin manual.');
+  } catch(e){
+    toast('⚠️ Gagal menyalin. Coba tahan teks lalu salin manual.');
   }
-  document.body.removeChild(ta);
+  document.body.removeChild(el);
 }
 
-// Helper: buat teks share dari hadis object
-function hadisShareText(bookName, item, lang){
-  const trans = lang==='en' ? (item.en||item.id) : item.id;
-  return `${item.arab}\n\n"${trans}"\n\n(${bookName} No. ${item.number||''})`;
+// Copy dari STORE key
+function copyStore(key){
+  if(!STORE[key]){ toast('⚠️ Data tidak ditemukan.'); return; }
+  const d = STORE[key];
+  const tx = LANG==='en' && d.en ? d.en : d.id;
+  copyText(d.arab + '\n\n"' + tx + '"\n\n(' + d.bookName + ' No. ' + d.num + ')');
 }
 
-// ============================================================
+// ─────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────
+let toastTimer = null;
+function toast(msg, dur=2500){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.style.opacity = '0', dur);
+}
+
+// ─────────────────────────────────────────────
+// BOOKMARK
+// ─────────────────────────────────────────────
+function toggleBM(key, btn){
+  const idx = BM.findIndex(b => b.key === key);
+  const d = STORE[key];
+  if(!d){ toast('⚠️ Data tidak ditemukan'); return; }
+  if(idx > -1){
+    BM.splice(idx, 1);
+    btn.textContent = '🔖 Simpan';
+    btn.classList.remove('bmd');
+    toast('Bookmark dihapus');
+  } else {
+    BM.push({ key, bookName:d.bookName, num:d.num, arab:d.arab, id:d.id, en:d.en||'', saved: new Date().toLocaleDateString('id-ID') });
+    btn.textContent = '🔖 Tersimpan';
+    btn.classList.add('bmd');
+    toast('🔖 Hadis disimpan!');
+  }
+  try { localStorage.setItem('hd4_bm', JSON.stringify(BM)); } catch(e){}
+  const sc = document.getElementById('stat-bm');
+  if(sc) sc.textContent = BM.length;
+}
+
+// ─────────────────────────────────────────────
 // HOME
-// ============================================================
+// ─────────────────────────────────────────────
 function showHome(){
-  updateNav(0);
-  const today = new Date();
-  const tgl = today.toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const totalH = books.reduce((s,b)=>s+b.total,0);
+  setNav(0); curBook = null;
+  const tgl = new Date().toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const tot = BOOKS.reduce((s,b)=>s+b.total,0);
 
   let h = `
-  <div class="hero-card">
-    <div class="hero-date">📅 ${tgl}</div>
-    <div class="hero-quote">"Ilmu adalah cahaya, dan hadis adalah lentera penerangnya. Pelajarilah sunnah Nabi ﷺ dengan penuh keikhlasan."</div>
+  <div class="hero">
+    <div class="hero-d">📅 ${tgl}</div>
+    <div class="hero-q">"Ilmu adalah cahaya, dan hadis adalah lentera penerangnya. Pelajarilah sunnah Nabi ﷺ dengan penuh keikhlasan."</div>
   </div>
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Kitab Hadis</div></div>
-    <div class="stat-card"><div class="stat-num">${Math.round(totalH/1000)}K+</div><div class="stat-label">Total Hadis</div></div>
-    <div class="stat-card" id="statBm"><div class="stat-num">${bookmarks.length}</div><div class="stat-label">Tersimpan</div></div>
+  <div class="sgrid">
+    <div class="sc"><div class="sn">7</div><div class="sl2">Kitab Hadis</div></div>
+    <div class="sc"><div class="sn">${Math.round(tot/1000)}K+</div><div class="sl2">Total Hadis</div></div>
+    <div class="sc"><div class="sn" id="stat-bm">${BM.length}</div><div class="sl2">Tersimpan</div></div>
   </div>
-  <div class="sec-title">📚 Pilih Kitab</div>
-  <div class="books-grid">`;
+  <div class="stl">📚 Pilih Kitab</div>
+  <div class="bgrid">`;
 
-  books.forEach(b=>{
-    h+=`<div class="book-card" onclick="loadBook('${b.id}','${b.full}',${b.total})">
-      <span class="book-emoji">${b.emoji}</span>
-      <div class="book-name">${b.full}</div>
-      <div class="book-count">${b.total.toLocaleString()} hadis</div>
+  BOOKS.forEach(b => {
+    h += `<div class="bc" onclick="loadBook('${b.id}','${b.full}',${b.total})">
+      <span class="bc-em">${b.em}</span>
+      <div class="bc-nm">${b.full}</div>
+      <div class="bc-ct">${b.total.toLocaleString()} hadis</div>
     </div>`;
   });
-  h+=`</div>`;
+  h += '</div>';
   document.getElementById('app').innerHTML = h;
   window.scrollTo(0,0);
 }
 
-// ============================================================
+// ─────────────────────────────────────────────
 // LOAD BOOK
-// ============================================================
-async function loadBook(id, name, total, page=1){
-  currentBook={id,name,total};
-  currentPage=page;
-  const app=document.getElementById('app');
-  app.innerHTML=`<div class="loading"><div class="spinner"></div><p>Memuat ${name}...</p></div>`;
+// ─────────────────────────────────────────────
+async function loadBook(id, fullName, total, page=1){
+  curBook = {id, full:fullName, total};
+  curPage = page;
+  const app = document.getElementById('app');
+  app.innerHTML = `<div class="ld"><div class="sp"></div><p>Memuat ${fullName}...</p></div>`;
   window.scrollTo(0,0);
 
-  const start=(page-1)*PAGE_SIZE+1;
-  const end=Math.min(page*PAGE_SIZE,total);
-  const totalPages=Math.ceil(total/PAGE_SIZE);
+  const start = (page-1)*PAGE_SIZE + 1;
+  const end = Math.min(page*PAGE_SIZE, total);
+  const totalPages = Math.ceil(total/PAGE_SIZE);
 
-  try{
-    const res=await fetch(`${API}/books/${id}?range=${start}-${end}`);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const json=await res.json();
-    const hadiths=json.data.hadiths;
+  try {
+    const res = await fetch(`${API}/books/${id}?range=${start}-${end}`);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    const hadiths = json.data.hadiths;
+
+    // Simpan ke STORE
+    hadiths.forEach(item => {
+      const key = id + '_' + item.number;
+      STORE[key] = { bookName: fullName, num: item.number, arab: item.arab, id: item.id, en: '' };
+      // Mark read
+      if(!HIST.includes(key)){ HIST.push(key); if(HIST.length>500) HIST.shift(); }
+    });
+    try { localStorage.setItem('hd4_hist', JSON.stringify(HIST)); } catch(e){}
 
     // Number grid
-    let numGrid='';
-    for(let i=start;i<=end;i++){
-      const isRead=readHistory.includes(`${id}_${i}`);
-      numGrid+=`<div class="num-btn ${isRead?'read':''}" onclick="scrollToH(${i})">${i}</div>`;
+    let ng = '';
+    for(let i=start; i<=end; i++){
+      const isRead = HIST.includes(id+'_'+i);
+      ng += `<div class="nb ${isRead?'rd':''}" onclick="document.getElementById('h${i}')&&document.getElementById('h${i}').scrollIntoView({behavior:'smooth',block:'start'})">${i}</div>`;
     }
 
-    const paginNav=()=>{
-      if(totalPages<=1) return '';
-      let p=`<div class="pagination">`;
-      if(page>1) p+=`<button class="page-btn" onclick="loadBook('${id}','${name}',${total},${page-1})">← Prev</button>`;
-      p+=`<button class="page-btn active">${page}/${totalPages}</button>`;
-      if(page<totalPages) p+=`<button class="page-btn" onclick="loadBook('${id}','${name}',${total},${page+1})">Next →</button>`;
-      return p+`</div>`;
+    const pNav = (pos) => {
+      if(totalPages <= 1) return '';
+      let p = '<div class="pgn">';
+      if(page > 1) p += `<button class="pb" onclick="loadBook('${id}','${fullName}',${total},${page-1})">← Prev</button>`;
+      p += `<button class="pb on">${page}/${totalPages}</button>`;
+      if(page < totalPages) p += `<button class="pb" onclick="loadBook('${id}','${fullName}',${total},${page+1})">Next →</button>`;
+      return p + '</div>';
     };
 
-    let h=`
-    <button class="back-btn" onclick="showHome()">← Kembali</button>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-      <h2 style="margin:0;font-family:'Playfair Display',serif;font-size:18px;">${name}</h2>
+    let h = `
+    <button class="bkbtn" onclick="showHome()">← Kembali</button>
+    <h2 style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px;">${fullName}</h2>
+    <p style="font-size:12px;color:var(--txm);margin-bottom:12px;">Hadis ${start}–${end} dari ${total.toLocaleString()}</p>
+    <div style="background:var(--card);border-radius:var(--r);padding:13px;margin-bottom:13px;box-shadow:var(--sh);">
+      <div style="font-size:11px;font-weight:700;color:var(--txm);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">🔢 Nomor — Tap untuk loncat</div>
+      <div class="ngrid">${ng}</div>
     </div>
-    <p style="font-size:12px;color:var(--text-muted);margin:0 0 12px;">Hadis ${start}–${end} dari ${total.toLocaleString()}</p>
-    <div style="background:var(--card);border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow-sm);">
-      <div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">🔢 Nomor — Tap untuk loncat</div>
-      <div class="num-grid">${numGrid}</div>
-    </div>
-    ${paginNav()}
-    <div id="hadis-list">`;
+    ${pNav()}
+    `;
 
-    hadiths.forEach(item=>{
-      const isBm=!!bookmarks.find(b=>b.id===id&&b.number===item.number);
-      const transText = currentLang==='en'&&item.en ? item.en : item.id;
-      // Mark read
-      const key=`${id}_${item.number}`;
-      if(!readHistory.includes(key)){readHistory.push(key);if(readHistory.length>300)readHistory.shift();}
+    hadiths.forEach(item => {
+      const key = id + '_' + item.number;
+      const isBM = !!BM.find(b => b.key === key);
+      const tx = LANG==='en' && STORE[key].en ? STORE[key].en : item.id;
 
-      h+=renderHadisBox(id, name, item, isBm, transText);
+      h += `<div class="hbox" id="h${item.number}">
+        <div class="hbadge">${item.number}</div>
+        <div class="htag">${fullName.replace('HR. ','')}</div>
+        <div class="arab">${item.arab}</div>
+        <p class="htx">${tx}</p>
+        <div class="hacts">
+          <button class="hbtn ${isBM?'bmd':''}" id="bm_${key}" onclick="toggleBM('${key}', this)">${isBM?'🔖 Tersimpan':'🔖 Simpan'}</button>
+          <button class="hbtn" onclick="openShare('${key}')">📤 Share</button>
+          <button class="hbtn" onclick="copyStore('${key}')">📋 Salin</button>
+        </div>
+      </div>`;
     });
 
-    try{localStorage.setItem('hd_hist',JSON.stringify(readHistory));}catch(e){}
-    h+=`</div>${paginNav()}`;
-    app.innerHTML=h;
+    h += pNav();
+    app.innerHTML = h;
     window.scrollTo(0,0);
-  }catch(e){
-    app.innerHTML=`
-    <button class="back-btn" onclick="showHome()">← Kembali</button>
-    <div class="error-card">
-      <div style="font-size:38px;margin-bottom:10px;">⚠️</div>
+
+  } catch(e){
+    app.innerHTML = `
+    <button class="bkbtn" onclick="showHome()">← Kembali</button>
+    <div class="ecard">
+      <div style="font-size:36px;margin-bottom:10px;">⚠️</div>
       <b>Gagal memuat hadis</b>
-      <p style="color:var(--text-muted);font-size:13px;margin:8px 0;">Periksa koneksi internet kamu.</p>
-      <button class="btn-primary" style="margin-top:8px;" onclick="loadBook('${id}','${name}',${total},${page})">🔄 Coba Lagi</button>
+      <p style="color:var(--txm);font-size:13px;margin:8px 0;">Periksa koneksi internet kamu.</p>
+      <button class="btnp" style="margin-top:8px;" onclick="loadBook('${id}','${fullName}',${total},${page})">🔄 Coba Lagi</button>
     </div>`;
   }
 }
 
-function renderHadisBox(bookId, bookName, item, isBm, transText){
-  const shareText = `${item.arab}\n\n"${transText}"\n\n(${bookName} No. ${item.number})`;
-  return `<div class="hadis-box" id="hadis-${item.number}">
-    <div class="h-badge">${item.number}</div>
-    <div class="h-tag">${bookName.replace('HR. ','')}</div>
-    <div class="arab">${item.arab}</div>
-    <p class="h-trans">${transText}</p>
-    <div class="h-actions">
-      <button class="h-btn ${isBm?'bookmarked':''}" id="bmbtn-${bookId}-${item.number}"
-        onclick="toggleBookmark('${bookId}','${bookName}',${item.number},this)">
-        ${isBm?'🔖 Tersimpan':'🔖 Simpan'}
-      </button>
-      <button class="h-btn" onclick="openShare(${JSON.stringify(shareText)})">📤 Share</button>
-      <button class="h-btn" onclick="salinTeks(${JSON.stringify(shareText)})">📋 Salin</button>
-    </div>
-  </div>`;
-}
-
-function scrollToH(num){
-  const el=document.getElementById('hadis-'+num);
-  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-// ============================================================
-// BOOKMARK
-// ============================================================
-function toggleBookmark(bookId, bookName, number, btn){
-  const idx=bookmarks.findIndex(b=>b.id===bookId&&b.number===number);
-  if(idx>-1){
-    bookmarks.splice(idx,1);
-    if(btn){btn.textContent='🔖 Simpan';btn.classList.remove('bookmarked');}
-  } else {
-    // Get hadis text from DOM
-    const box=document.getElementById('hadis-'+number);
-    const arab=box?box.querySelector('.arab')?.textContent:'';
-    const trans=box?box.querySelector('.h-trans')?.textContent:'';
-    bookmarks.push({id:bookId,name:bookName,number,arab,trans,saved:new Date().toLocaleDateString('id-ID')});
-    if(btn){btn.textContent='🔖 Tersimpan';btn.classList.add('bookmarked');}
-    showToast('🔖 Hadis disimpan!');
-  }
-  try{localStorage.setItem('hd_bm',JSON.stringify(bookmarks));}catch(e){}
-  // Update stat
-  const s=document.getElementById('statBm');
-  if(s) s.querySelector('.stat-num').textContent=bookmarks.length;
-}
-
+// ─────────────────────────────────────────────
+// BOOKMARK PAGE
+// ─────────────────────────────────────────────
 function showBookmark(){
-  updateNav(4);
-  let h=`<div class="sec-title">🔖 Hadis Tersimpan</div>`;
-  if(!bookmarks.length){
-    h+=`<div class="bm-empty"><span style="font-size:50px;display:block;margin-bottom:14px;">🔖</span><b>Belum ada hadis tersimpan</b><p style="font-size:13px;margin-top:8px;">Tap tombol Simpan saat membaca hadis.</p></div>`;
+  setNav(4);
+  let h = '<div class="stl">🔖 Hadis Tersimpan</div>';
+  if(!BM.length){
+    h += `<div style="text-align:center;padding:50px 20px;color:var(--txm);"><div style="font-size:50px;margin-bottom:14px;">🔖</div><b>Belum ada hadis tersimpan</b><p style="font-size:13px;margin-top:8px;">Tap tombol Simpan saat membaca hadis.</p></div>`;
   } else {
-    bookmarks.slice().reverse().forEach(bm=>{
-      const shareText = `${bm.arab}\n\n"${bm.trans}"\n\n(${bm.name} No. ${bm.number})`;
-      h+=`<div class="hadis-box">
-        <div class="h-badge">${bm.number}</div>
-        <div class="h-tag">${bm.name.replace('HR. ','')}</div>
+    BM.slice().reverse().forEach(bm => {
+      const tx = LANG==='en' && bm.en ? bm.en : bm.id;
+      const shareText = bm.arab + '\n\n"' + tx + '"\n\n(' + bm.bookName + ' No. ' + bm.num + ')';
+      h += `<div class="hbox">
+        <div class="hbadge">${bm.num}</div>
+        <div class="htag">${bm.bookName.replace('HR. ','')}</div>
         <div class="arab">${bm.arab}</div>
-        <p class="h-trans">${bm.trans}</p>
-        <div style="font-size:11px;color:var(--text-muted);margin:6px 0;">📅 ${bm.saved}</div>
-        <div class="h-actions">
-          <button class="h-btn" onclick="openShare(${JSON.stringify(shareText)})">📤 Share</button>
-          <button class="h-btn" onclick="salinTeks(${JSON.stringify(shareText)})">📋 Salin</button>
-          <button class="h-btn" onclick="hapusBm('${bm.id}',${bm.number})" style="border-color:#e74c3c;color:#e74c3c;">🗑️ Hapus</button>
+        <p class="htx">${tx}</p>
+        <div style="font-size:11px;color:var(--txm);margin:6px 0;">📅 ${bm.saved}</div>
+        <div class="hacts">
+          <button class="hbtn" onclick="openShareText(${JSON.stringify(shareText)})">📤 Share</button>
+          <button class="hbtn" onclick="copyText(${JSON.stringify(shareText)})">📋 Salin</button>
+          <button class="hbtn red" onclick="hapusBM('${bm.key}')">🗑️ Hapus</button>
         </div>
       </div>`;
     });
   }
-  document.getElementById('app').innerHTML=h;
+  document.getElementById('app').innerHTML = h;
   window.scrollTo(0,0);
 }
 
-function hapusBm(id,num){
-  bookmarks=bookmarks.filter(b=>!(b.id===id&&b.number===num));
-  try{localStorage.setItem('hd_bm',JSON.stringify(bookmarks));}catch(e){}
+function hapusBM(key){
+  BM = BM.filter(b => b.key !== key);
+  try { localStorage.setItem('hd4_bm', JSON.stringify(BM)); } catch(e){}
   showBookmark();
+  toast('Bookmark dihapus');
 }
 
-// ============================================================
-// READ HISTORY
-// ============================================================
-function showReadHistory(){
-  document.getElementById('app').innerHTML=`
-  <button class="back-btn" onclick="closeMenu()">← Kembali</button>
-  <div class="sec-title">📜 Riwayat Baca</div>
-  <div style="background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow-sm);">
-    <p style="font-size:13px;color:var(--text-muted);">Total <b>${readHistory.length}</b> hadis pernah dibaca.</p>
-    <button class="btn-primary" onclick="clearHistory()" style="margin-top:10px;background:linear-gradient(135deg,#c0392b,#e74c3c);">🗑️ Hapus Semua Riwayat</button>
+// ─────────────────────────────────────────────
+// HISTORY
+// ─────────────────────────────────────────────
+function showHistory(){
+  document.getElementById('app').innerHTML = `
+  <button class="bkbtn" onclick="closeMenu()">← Kembali</button>
+  <div class="stl">📜 Riwayat Baca</div>
+  <div style="background:var(--card);padding:17px;border-radius:var(--r);box-shadow:var(--sh);">
+    <p style="font-size:13px;color:var(--txm);">Total <b>${HIST.length}</b> hadis pernah dibaca.</p>
+    <button class="btnp" onclick="clearHist()" style="margin-top:10px;background:linear-gradient(135deg,#c0392b,#e74c3c);">🗑️ Hapus Semua Riwayat</button>
   </div>`;
   window.scrollTo(0,0);
 }
-function clearHistory(){
-  readHistory=[];
-  try{localStorage.setItem('hd_hist','[]');}catch(e){}
-  showReadHistory();
+function clearHist(){
+  HIST = [];
+  try { localStorage.setItem('hd4_hist','[]'); } catch(e){}
+  showHistory();
+  toast('Riwayat dihapus');
 }
 
-// ============================================================
+// ─────────────────────────────────────────────
 // SEARCH
-// ============================================================
+// ─────────────────────────────────────────────
 function showSearch(){
-  updateNav(1);
-  const opts=books.map(b=>`<option value="${b.id}">${b.full} (${b.total} hadis)</option>`).join('');
-  document.getElementById('app').innerHTML=`
-  <div class="search-box">
+  setNav(1); curBook = null;
+  const opts = BOOKS.map(b=>`<option value="${b.id}">${b.full} (${b.total})</option>`).join('');
+  document.getElementById('app').innerHTML = `
+  <div class="sbox">
     <h3>🔍 Cari Hadis</h3>
-    <p style="font-size:13px;color:var(--text-muted);margin:0 0 8px;">Pilih kitab dan masukkan nomor hadis.</p>
+    <p style="font-size:13px;color:var(--txm);margin:0 0 8px;">Pilih kitab dan masukkan nomor hadis.</p>
     <select id="sKitab">${opts}</select>
     <input type="number" id="sNo" placeholder="Nomor hadis (contoh: 1)" min="1" onkeydown="if(event.key==='Enter')doSearch()">
-    <button class="btn-primary" onclick="doSearch()">🔍 Cari Hadis</button>
+    <button class="btnp" onclick="doSearch()">🔍 Cari Hadis</button>
   </div>
-  <div id="resSearch"></div>`;
+  <div id="sRes"></div>`;
 }
 
 async function doSearch(){
-  const k=document.getElementById('sKitab').value;
-  const n=document.getElementById('sNo').value.trim();
-  const res=document.getElementById('resSearch');
-  if(!n){res.innerHTML=`<div class="error-card">Masukkan nomor hadis terlebih dahulu.</div>`;return;}
-  res.innerHTML=`<div class="loading"><div class="spinner"></div><p>Mencari hadis no. ${n}...</p></div>`;
-  try{
-    const r=await fetch(`${API}/books/${k}/${n}`);
+  const k = document.getElementById('sKitab').value;
+  const n = document.getElementById('sNo').value.trim();
+  const res = document.getElementById('sRes');
+  if(!n){ res.innerHTML = '<div class="ecard">Masukkan nomor hadis.</div>'; return; }
+  res.innerHTML = `<div class="ld"><div class="sp"></div><p>Mencari no. ${n}...</p></div>`;
+  try {
+    const r = await fetch(`${API}/books/${k}/${n}`);
     if(!r.ok) throw new Error('HTTP '+r.status);
-    const d=await r.json();
-    const item=d.data.contents;
-    const bName=books.find(b=>b.id===k)?.full||k;
-    const isBm=!!bookmarks.find(b=>b.id===k&&b.number===item.number);
-    const transText=item.id;
-    res.innerHTML=renderHadisBox(k,bName,item,isBm,transText);
-  }catch(e){
-    res.innerHTML=`<div class="error-card"><div style="font-size:28px;margin-bottom:8px;">😔</div><b>Hadis tidak ditemukan</b><p style="color:var(--text-muted);font-size:13px;">Pastikan nomor hadis sesuai kitab yang dipilih.</p></div>`;
+    const d = await r.json();
+    const item = d.data.contents;
+    const bName = BOOKS.find(b=>b.id===k)?.full || k;
+    const key = k+'_'+item.number;
+    STORE[key] = { bookName:bName, num:item.number, arab:item.arab, id:item.id, en:'' };
+    const isBM = !!BM.find(b=>b.key===key);
+    const tx = item.id;
+    res.innerHTML = `<div class="hbox" id="h${item.number}">
+      <div class="hbadge">${item.number}</div>
+      <div class="htag">${bName.replace('HR. ','')}</div>
+      <div class="arab">${item.arab}</div>
+      <p class="htx">${tx}</p>
+      <div class="hacts">
+        <button class="hbtn ${isBM?'bmd':''}" id="bm_${key}" onclick="toggleBM('${key}',this)">${isBM?'🔖 Tersimpan':'🔖 Simpan'}</button>
+        <button class="hbtn" onclick="openShare('${key}')">📤 Share</button>
+        <button class="hbtn" onclick="copyStore('${key}')">📋 Salin</button>
+      </div>
+    </div>`;
+  } catch(e){
+    res.innerHTML = `<div class="ecard"><div style="font-size:26px;margin-bottom:8px;">😔</div><b>Hadis tidak ditemukan</b><p style="color:var(--txm);font-size:13px;">Pastikan nomor sesuai kitab.</p></div>`;
   }
 }
 
-// ============================================================
+// ─────────────────────────────────────────────
 // HARIAN
-// ============================================================
+// ─────────────────────────────────────────────
 function showHarian(){
-  updateNav(2);
-  const dayIdx=new Date().getDay();
-  const hd=harianData[dayIdx];
-  const teks=currentLang==='en'?(hd.en||hd.id):hd.id;
+  setNav(2); curBook = null;
+  const day = new Date().getDay();
+  const hd = HARIAN[day];
+  const tx = LANG==='en' ? hd.en : hd.id;
+  const mainShare = hd.arab + '\n\n"' + tx + '"\n\n(' + hd.src + ')';
 
-  let h=`
-  <div class="harian-card">
-    <div class="h-tag-pill">✨ Hadis Hari Ini</div>
-    <div class="q-arab">${hd.arab}</div>
-    <p style="font-style:italic;font-size:14px;line-height:1.8;margin-bottom:10px;">"${teks}"</p>
-    <p style="font-size:12px;opacity:0.65;margin:0 0 14px;">${hd.sumber}</p>
-    <div style="display:flex;gap:8px;justify-content:center;">
-      <button onclick="openShare(${JSON.stringify(hd.arab+'\n\n"'+teks+'"\n\n('+hd.sumber+')')})" style="padding:10px 18px;background:rgba(255,255,255,0.2);color:white;border:1.5px solid rgba(255,255,255,0.4);border-radius:25px;font-weight:700;cursor:pointer;font-family:Tajawal,sans-serif;font-size:13px;">📤 Share</button>
-      <button onclick="salinTeks(${JSON.stringify(hd.arab+'\n\n"'+teks+'"\n\n('+hd.sumber+')')})" style="padding:10px 18px;background:rgba(255,255,255,0.2);color:white;border:1.5px solid rgba(255,255,255,0.4);border-radius:25px;font-weight:700;cursor:pointer;font-family:Tajawal,sans-serif;font-size:13px;">📋 Salin</button>
+  let h = `
+  <div class="hcard">
+    <div class="hpill">✨ Hadis Hari Ini</div>
+    <div class="qar">${hd.arab}</div>
+    <p style="font-style:italic;font-size:14px;line-height:1.8;margin-bottom:10px;">"${tx}"</p>
+    <p style="font-size:12px;opacity:.65;margin:0 0 14px;">${hd.src}</p>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <button class="wbtn" onclick="openShareText(${JSON.stringify(mainShare)})">📤 Share</button>
+      <button class="wbtn" onclick="copyText(${JSON.stringify(mainShare)})">📋 Salin</button>
     </div>
   </div>
-  <div class="sec-title">📋 Koleksi Hadis Pilihan</div>`;
+  <div class="stl">📋 Koleksi Hadis Pilihan</div>`;
 
-  harianData.forEach((item,i)=>{
-    const t=currentLang==='en'?(item.en||item.id):item.id;
-    const shareText=`${item.arab}\n\n"${t}"\n\n(${item.sumber})`;
-    h+=`<div class="hadis-box">
-      <div class="h-badge">${i+1}</div>
-      <div class="h-tag">${item.sumber.replace('HR. ','')}</div>
+  HARIAN.forEach((item, i) => {
+    const t = LANG==='en' ? item.en : item.id;
+    const st = item.arab + '\n\n"' + t + '"\n\n(' + item.src + ')';
+    h += `<div class="hbox">
+      <div class="hbadge">${i+1}</div>
+      <div class="htag">${item.src.replace('HR. ','')}</div>
       <div class="arab">${item.arab}</div>
-      <p class="h-trans">${t}</p>
-      <div class="h-actions">
-        <button class="h-btn" onclick="openShare(${JSON.stringify(shareText)})">📤 Share</button>
-        <button class="h-btn" onclick="salinTeks(${JSON.stringify(shareText)})">📋 Salin</button>
+      <p class="htx">${t}</p>
+      <div class="hacts">
+        <button class="hbtn" onclick="openShareText(${JSON.stringify(st)})">📤 Share</button>
+        <button class="hbtn" onclick="copyText(${JSON.stringify(t + '\n(' + item.src + ')')})">📋 Salin</button>
       </div>
     </div>`;
   });
-
-  document.getElementById('app').innerHTML=h;
+  document.getElementById('app').innerHTML = h;
   window.scrollTo(0,0);
 }
 
-// ============================================================
-// DOA HARIAN
-// ============================================================
+// ─────────────────────────────────────────────
+// DOA
+// ─────────────────────────────────────────────
 function showDoa(){
-  updateNav(3);
-  let h=`<div class="sec-title">🤲 Doa Harian</div>`;
-  doaData.forEach((doa,i)=>{
-    const shareText=`${doa.title}\n\n${doa.arab}\n\nLatin: ${doa.latin}\n\nArti: ${doa.arti}`;
-    h+=`<div class="doa-box">
-      <div class="doa-title">${i+1}. ${doa.title}</div>
-      <div class="doa-arab">${doa.arab}</div>
-      <div class="doa-latin">${doa.latin}</div>
-      <div class="doa-arti">${doa.arti}</div>
-      <div class="h-actions" style="margin-top:10px;">
-        <button class="h-btn" onclick="openShare(${JSON.stringify(shareText)})">📤 Share</button>
-        <button class="h-btn" onclick="salinTeks(${JSON.stringify(shareText)})">📋 Salin</button>
+  setNav(3); curBook = null;
+  let h = '<div class="stl">🤲 Doa Harian</div>';
+  DOA.forEach((d, i) => {
+    const st = d.t + '\n\n' + d.arab + '\n\nLatin: ' + d.lat + '\n\nArti: ' + d.arti;
+    h += `<div class="dbox">
+      <div class="dtl">${i+1}. ${d.t}</div>
+      <div class="darab">${d.arab}</div>
+      <div class="dlat">${d.lat}</div>
+      <div class="darti">${d.arti}</div>
+      <div class="hacts" style="margin-top:10px;">
+        <button class="hbtn" onclick="openShareText(${JSON.stringify(st)})">📤 Share</button>
+        <button class="hbtn" onclick="copyText(${JSON.stringify(d.arab + '\n\n' + d.lat + '\n\n' + d.arti)})">📋 Salin</button>
       </div>
     </div>`;
   });
-  document.getElementById('app').innerHTML=h;
+  document.getElementById('app').innerHTML = h;
   window.scrollTo(0,0);
 }
 
-// ============================================================
+// ─────────────────────────────────────────────
 // WAKTU SHOLAT
-// ============================================================
-async function showSholat(){
-  document.getElementById('app').innerHTML=`
-  <button class="back-btn" onclick="closeMenu()">← Kembali</button>
-  <div class="sec-title">🕌 Waktu Sholat</div>
-  <div class="loading"><div class="spinner"></div><p>Mendeteksi lokasi...</p></div>`;
+// ─────────────────────────────────────────────
+function showSholat(){
+  curBook = null;
+  document.getElementById('app').innerHTML = `
+  <button class="bkbtn" onclick="closeMenu()">← Kembali</button>
+  <div class="stl">🕌 Waktu Sholat</div>
+  <div class="ld"><div class="sp"></div><p>Mendeteksi lokasi...</p></div>`;
   window.scrollTo(0,0);
 
-  if(!navigator.geolocation){
-    document.getElementById('app').innerHTML+=`<div class="error-card">Lokasi tidak tersedia di browser ini.</div>`;
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(async pos=>{
-    const {latitude:lat,longitude:lng}=pos.coords;
-    try{
-      const r=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=11`);
-      const d=await r.json();
-      const t=d.data.timings;
-      const meta=d.data.meta;
-      const now=new Date();
-      const nowStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  if(!navigator.geolocation){ document.getElementById('app').innerHTML += '<div class="ecard">Lokasi tidak tersedia di browser ini.</div>'; return; }
 
-      const sholatList=[
-        {name:"Subuh",time:t.Fajr},
-        {name:"Dzuhur",time:t.Dhuhr},
-        {name:"Ashar",time:t.Asr},
-        {name:"Maghrib",time:t.Maghrib},
-        {name:"Isya",time:t.Isha}
-      ];
-      // Find aktif (next prayer)
-      let nextIdx=sholatList.findIndex(s=>s.time>nowStr);
-      if(nextIdx===-1) nextIdx=0;
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const {latitude:lat, longitude:lng} = pos.coords;
+    try {
+      const r = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=11`);
+      const d = await r.json();
+      const t = d.data.timings;
+      const meta = d.data.meta;
+      const now = new Date();
+      const nowStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
 
-      let html=`
-      <button class="back-btn" onclick="closeMenu()">← Kembali</button>
-      <div class="sec-title">🕌 Waktu Sholat</div>
-      <div class="sholat-card">
-        <div class="sholat-title">📍 ${meta.timezone||'Lokal'} · ${new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'})}</div>
-        <div class="sholat-grid">`;
+      const list = [{n:'Subuh',t:t.Fajr},{n:'Dzuhur',t:t.Dhuhr},{n:'Ashar',t:t.Asr},{n:'Maghrib',t:t.Maghrib},{n:'Isya',t:t.Isha}];
+      let nextIdx = list.findIndex(s => s.t > nowStr);
+      if(nextIdx === -1) nextIdx = 0;
 
-      sholatList.forEach((s,i)=>{
-        html+=`<div class="sholat-item ${i===nextIdx?'aktif':''}">
-          <div class="sholat-name">${s.name}</div>
-          <div class="sholat-time">${s.time}</div>
+      let html = `
+      <button class="bkbtn" onclick="closeMenu()">← Kembali</button>
+      <div class="stl">🕌 Waktu Sholat</div>
+      <div class="scard">
+        <div style="font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">📍 ${meta.timezone||'Lokal'} · ${new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'})}</div>
+        <div class="sgrid2">`;
+      list.forEach((s,i) => {
+        html += `<div class="si ${i===nextIdx?'ak':''}">
+          <div class="si-nm">${s.n}</div>
+          <div class="si-tm">${s.t}</div>
         </div>`;
       });
+      html += `</div><div style="font-size:10px;color:var(--txm);margin-top:6px;text-align:right;">🕐 Sekarang: ${nowStr}</div></div>`;
 
-      html+=`</div><div class="sholat-loc">🕐 Sekarang: ${nowStr}</div></div>`;
+      html += `<div class="stl">📿 Dzikir Setelah Sholat</div>
+      ${['Subhanallah (33x)|سُبْحَانَ اللَّهِ|Maha Suci Allah','Alhamdulillah (33x)|اَلْحَمْدُ لِلَّهِ|Segala Puji Bagi Allah','Allahu Akbar (33x)|اَللَّهُ أَكْبَرُ|Allah Maha Besar'].map(x=>{const[tt,ar,ar2]=x.split('|');return`<div class="dbox"><div class="dtl">${tt}</div><div class="darab">${ar}</div><div class="darti">${ar2}</div></div>`;}).join('')}`;
 
-      // Doa setelah sholat
-      html+=`<div class="sec-title">📿 Dzikir & Doa Setelah Sholat</div>
-      <div class="doa-box">
-        <div class="doa-title">Subhanallah (33x)</div>
-        <div class="doa-arab">سُبْحَانَ اللَّهِ</div>
-        <div class="doa-arti">Maha Suci Allah</div>
-      </div>
-      <div class="doa-box">
-        <div class="doa-title">Alhamdulillah (33x)</div>
-        <div class="doa-arab">اَلْحَمْدُ لِلَّهِ</div>
-        <div class="doa-arti">Segala Puji Bagi Allah</div>
-      </div>
-      <div class="doa-box">
-        <div class="doa-title">Allahu Akbar (33x)</div>
-        <div class="doa-arab">اَللَّهُ أَكْبَرُ</div>
-        <div class="doa-arti">Allah Maha Besar</div>
-      </div>`;
-
-      document.getElementById('app').innerHTML=html;
-    }catch(e){
-      document.getElementById('app').innerHTML+=`<div class="error-card">Gagal mengambil jadwal sholat. Cek koneksi internet.</div>`;
+      document.getElementById('app').innerHTML = html;
+    } catch(e){
+      document.getElementById('app').innerHTML = '<button class="bkbtn" onclick="closeMenu()">← Kembali</button><div class="ecard">Gagal mengambil jadwal sholat. Cek koneksi internet.</div>';
     }
-  },()=>{
-    document.getElementById('app').innerHTML=`
-    <button class="back-btn" onclick="closeMenu()">← Kembali</button>
-    <div class="error-card"><b>Izin lokasi ditolak</b><p style="font-size:13px;color:var(--text-muted);margin:8px 0;">Aktifkan izin lokasi di browser untuk melihat jadwal sholat.</p></div>`;
+  }, () => {
+    document.getElementById('app').innerHTML = `<button class="bkbtn" onclick="closeMenu()">← Kembali</button><div class="ecard"><b>Izin lokasi ditolak</b><p style="font-size:13px;color:var(--txm);margin:8px 0;">Aktifkan izin lokasi di browser untuk melihat jadwal sholat.</p></div>`;
   });
 }
 
-// ============================================================
-// PWA INSTALL
-// ============================================================
-window.addEventListener('beforeinstallprompt',e=>{
+// ─────────────────────────────────────────────
+// PWA — FIXED dengan ikon SVG inline
+// ─────────────────────────────────────────────
+(function setupPWA(){
+  // Buat ikon SVG sebagai data URL
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+    <rect width="192" height="192" rx="40" fill="#1B4D3E"/>
+    <rect x="15" y="15" width="162" height="162" rx="30" fill="none" stroke="#C9A84C" stroke-width="4"/>
+    <text x="96" y="115" font-size="80" text-anchor="middle" fill="#F0D080">📖</text>
+    <text x="96" y="165" font-size="20" text-anchor="middle" fill="#C9A84C" font-family="serif">HD</text>
+  </svg>`;
+  const iconUrl = 'data:image/svg+xml;base64,' + btoa(svg);
+
+  // Set ikon di head
+  document.getElementById('apple-icon').href = iconUrl;
+  document.getElementById('fav-icon').href = iconUrl;
+
+  // Buat manifest
+  const manifest = {
+    name: 'HadisDigital Premium',
+    short_name: 'HadisDigital',
+    description: 'Aplikasi Hadis Digital Premium — 7 kitab hadis terpercaya',
+    start_url: window.location.href,
+    display: 'standalone',
+    orientation: 'portrait',
+    background_color: '#1B4D3E',
+    theme_color: '#1B4D3E',
+    icons: [
+      { src: iconUrl, sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
+      { src: iconUrl, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const link = document.getElementById('pwa-manifest') || document.createElement('link');
+  link.id = 'pwa-manifest';
+  link.rel = 'manifest';
+  link.href = URL.createObjectURL(blob);
+  if(!document.getElementById('pwa-manifest')) document.head.appendChild(link);
+})();
+
+// Tangkap event install
+window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
-  deferredPrompt=e;
+  deferredPWA = e;
+  toast('💡 Aplikasi bisa diinstall! Buka menu ☰ → Install App');
 });
-function installPWA(){
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(()=>{deferredPrompt=null;});
+
+function doInstallPWA(){
+  if(deferredPWA){
+    deferredPWA.prompt();
+    deferredPWA.userChoice.then(() => { deferredPWA = null; });
+    return;
+  }
+  // Panduan manual per platform
+  const ua = navigator.userAgent;
+  if(/iPhone|iPad|iPod/.test(ua)){
+    toast('Di Safari: tap ikon □↑ → "Add to Home Screen" 📱', 4000);
+  } else if(/Android/.test(ua)){
+    toast('Tap menu browser (⋮) → "Add to Home Screen" atau "Install" 📱', 4000);
   } else {
-    // Panduan manual untuk iOS/Android
-    const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
-    if(isIOS){
-      showToast('Di Safari: tap ikon Share → "Add to Home Screen"');
-    } else {
-      showToast('Buka menu browser → "Add to Home Screen" atau "Install App"');
-    }
+    toast('Di Chrome: klik ikon install di address bar, atau menu ⋮ → Install 💻', 4000);
   }
 }
 
-// Buat manifest PWA dinamis
-const manifest={name:"HadisDigital Premium",short_name:"HadisDigital",description:"Aplikasi Hadis Digital Premium",start_url:window.location.href,display:"standalone",background_color:"#1B4D3E",theme_color:"#1B4D3E",icons:[{src:"https://via.placeholder.com/192x192/1B4D3E/F0D080?text=HD",sizes:"192x192",type:"image/png"},{src:"https://via.placeholder.com/512x512/1B4D3E/F0D080?text=HD",sizes:"512x512",type:"image/png"}]};
-const blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
-document.getElementById('pwa-manifest').href=URL.createObjectURL(blob);
-
-// ============================================================
-// TOAST
-// ============================================================
-function showToast(msg,dur=2500){
-  let t=document.getElementById('_toast');
-  if(!t){
-    t=document.createElement('div');
-    t.id='_toast';
-    t.style.cssText='position:fixed;bottom:105px;left:50%;transform:translateX(-50%);background:#1B4D3E;color:white;padding:10px 20px;border-radius:25px;font-size:13px;z-index:9999;font-family:Tajawal,sans-serif;box-shadow:0 4px 15px rgba(0,0,0,0.25);transition:opacity .3s;white-space:nowrap;max-width:90vw;text-align:center;';
-    document.body.appendChild(t);
-  }
-  t.textContent=msg;t.style.opacity='1';
-  clearTimeout(t._timer);
-  t._timer=setTimeout(()=>t.style.opacity='0',dur);
-}
-
-// ============================================================
+// ─────────────────────────────────────────────
 // MENU PAGES
-// ============================================================
-function showTentangKami(){
-  document.getElementById('app').innerHTML=`
-  <button class="back-btn" onclick="showHome()">← Kembali</button>
-  <div class="hadis-box">
-    <h3 style="margin-top:0;font-family:'Playfair Display',serif;">Tentang Kami</h3>
-    <p style="line-height:1.8;"><b>Hadis Digital Premium</b> adalah platform digital yang menghadirkan kumpulan kitab hadis terpercaya — Shahih Bukhari, Shahih Muslim, Tirmidzi, Nasai, Abu Daud, Ibnu Majah, dan Musnad Ahmad — dalam satu aplikasi ringan dan mudah diakses.</p>
+// ─────────────────────────────────────────────
+function showTentang(){
+  curBook = null;
+  document.getElementById('app').innerHTML = `
+  <button class="bkbtn" onclick="showHome()">← Kembali</button>
+  <div class="hbox" style="border-bottom-color:var(--p);">
+    <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px;">Tentang Kami</h3>
+    <p style="line-height:1.8;"><b>Hadis Digital Premium</b> adalah platform digital yang menghadirkan kumpulan kitab hadis terpercaya — Bukhari, Muslim, Tirmidzi, Nasai, Abu Daud, Ibnu Majah, dan Ahmad — dalam satu aplikasi ringan dan mudah diakses.</p>
     <p style="line-height:1.8;margin-top:10px;">Kami percaya teknologi adalah sarana dakwah modern. Melalui aplikasi ini, kami berupaya membantu umat Islam mengakses hadis Nabi ﷺ dengan tampilan nyaman, bersih, dan bebas gangguan.</p>
-    <p style="margin-top:14px;font-style:italic;color:var(--primary);text-align:center;">"Khairunnas Anfa'uhum Linnas"</p>
-  </div>`;window.scrollTo(0,0);
-}
-function showKontakSaran(){
-  document.getElementById('app').innerHTML=`
-  <button class="back-btn" onclick="showHome()">← Kembali</button>
-  <div class="hadis-box">
-    <h3 style="margin-top:0;font-family:'Playfair Display',serif;">💬 Kontak & Saran</h3>
-    <p style="font-size:13px;color:var(--text-muted);">Suara Anda sangat berarti bagi pengembangan aplikasi ini.</p>
-    <a href="https://wa.me/6283803888990?text=Assalamualaikum" style="display:flex;align-items:center;gap:12px;background:var(--bg);padding:14px;border-radius:var(--radius-sm);text-decoration:none;color:var(--text);margin:10px 0;border:1.5px solid var(--primary-light);">
-      <span style="font-size:24px;">📱</span><div><div style="font-weight:700;">WhatsApp</div><div style="font-size:12px;color:var(--text-muted);">083803888990</div></div>
-    </a>
-    <a href="mailto:mholis1991@gmail.com" style="display:flex;align-items:center;gap:12px;background:var(--bg);padding:14px;border-radius:var(--radius-sm);text-decoration:none;color:var(--text);border:1.5px solid var(--primary-light);">
-      <span style="font-size:24px;">📧</span><div><div style="font-weight:700;">Email</div><div style="font-size:12px;color:var(--text-muted);">mholis1991@gmail.com</div></div>
-    </a>
-    <p style="margin-top:18px;text-align:center;font-style:italic;color:var(--primary);">Jazakumullah Khairan Katsiran</p>
-  </div>`;window.scrollTo(0,0);
-}
-function showDonasi(){
-  document.getElementById('app').innerHTML=`
-  <button class="back-btn" onclick="showHome()">← Kembali</button>
-  <div class="hadis-box">
-    <h3 style="margin-top:0;font-family:'Playfair Display',serif;">🎁 Donasi Pengembangan</h3>
-    <p style="line-height:1.8;">Aplikasi ini dikembangkan sebagai bentuk kontribusi dakwah digital. Untuk menjaga tetap aktif, bebas iklan, dan terus berkembang, kami membuka kesempatan donasi.</p>
-    <hr style="margin:14px 0;opacity:0.15;">
-    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(61,153,112,0.1));padding:16px;border-radius:var(--radius-sm);border:1.5px solid rgba(201,168,76,0.3);text-align:center;">
-      <div style="font-weight:700;margin-bottom:6px;">🏦 Transfer Bank BCA</div>
-      <div style="font-size:24px;font-weight:700;color:var(--primary);letter-spacing:3px;margin:8px 0;">6095055005</div>
-      <div style="font-size:13px;color:var(--text-muted);">a.n Muhamad Holis</div>
-      <button class="h-btn" onclick="salinTeks('6095055005')" style="margin-top:10px;max-width:160px;">📋 Salin Nomor</button>
-    </div>
-    <p style="margin-top:14px;font-style:italic;color:var(--primary);text-align:center;font-size:13px;">Semoga menjadi amal jariyah yang terus mengalir pahalanya. Aamiin.</p>
-  </div>`;window.scrollTo(0,0);
+    <p style="margin-top:14px;font-style:italic;color:var(--p);text-align:center;">"Khairunnas Anfa'uhum Linnas"</p>
+  </div>`;
+  window.scrollTo(0,0);
 }
 
-// ============================================================
+function showKontak(){
+  curBook = null;
+  document.getElementById('app').innerHTML = `
+  <button class="bkbtn" onclick="showHome()">← Kembali</button>
+  <div class="hbox" style="border-bottom-color:var(--p);">
+    <h3 style="font-family:'Playfair Display',serif;margin-bottom:10px;">💬 Kontak & Saran</h3>
+    <p style="font-size:13px;color:var(--txm);margin-bottom:12px;">Suara Anda sangat berarti bagi pengembangan aplikasi ini.</p>
+    <a href="https://wa.me/6283803888990?text=Assalamualaikum" target="_blank" style="display:flex;align-items:center;gap:12px;background:var(--bg);padding:14px;border-radius:var(--rs);text-decoration:none;color:var(--tx);margin-bottom:9px;border:1.5px solid var(--pl);">
+      <span style="font-size:24px;">📱</span><div><div style="font-weight:700;">WhatsApp</div><div style="font-size:12px;color:var(--txm);">083803888990</div></div>
+    </a>
+    <a href="mailto:mholis1991@gmail.com" style="display:flex;align-items:center;gap:12px;background:var(--bg);padding:14px;border-radius:var(--rs);text-decoration:none;color:var(--tx);border:1.5px solid var(--pl);">
+      <span style="font-size:24px;">📧</span><div><div style="font-weight:700;">Email</div><div style="font-size:12px;color:var(--txm);">mholis1991@gmail.com</div></div>
+    </a>
+    <p style="margin-top:16px;text-align:center;font-style:italic;color:var(--p);">Jazakumullah Khairan Katsiran</p>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+function showDonasi(){
+  curBook = null;
+  document.getElementById('app').innerHTML = `
+  <button class="bkbtn" onclick="showHome()">← Kembali</button>
+  <div class="hbox" style="border-bottom-color:var(--s);">
+    <h3 style="font-family:'Playfair Display',serif;margin-bottom:10px;">🎁 Donasi Pengembangan</h3>
+    <p style="line-height:1.8;">Aplikasi ini dikembangkan sebagai bentuk kontribusi dakwah digital. Untuk menjaga tetap aktif, bebas iklan, dan terus berkembang, kami membuka kesempatan donasi.</p>
+    <hr style="margin:13px 0;opacity:.15;">
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(61,153,112,.1));padding:16px;border-radius:var(--rs);border:1.5px solid rgba(201,168,76,.3);text-align:center;">
+      <div style="font-weight:700;margin-bottom:6px;">🏦 Transfer Bank BCA</div>
+      <div style="font-size:24px;font-weight:700;color:var(--p);letter-spacing:3px;margin:8px 0;">6095055005</div>
+      <div style="font-size:13px;color:var(--txm);margin-bottom:12px;">a.n Muhamad Holis</div>
+      <button class="hbtn" style="max-width:180px;margin:0 auto;display:block;" onclick="copyText('6095055005')">📋 Salin Nomor Rekening</button>
+    </div>
+    <p style="margin-top:14px;font-style:italic;color:var(--p);text-align:center;font-size:13px;">Semoga menjadi amal jariyah yang terus mengalir. Aamiin.</p>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+// ─────────────────────────────────────────────
 // INIT
-// ============================================================
-window.onload=()=>showHome();
+// ─────────────────────────────────────────────
+window.onload = () => showHome();
 </script>
 </body>
 </html>
