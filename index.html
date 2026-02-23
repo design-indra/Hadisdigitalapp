@@ -177,9 +177,132 @@ input:focus,select:focus{border-color:var(--p);}
 
 /* TOAST */
 #toast{position:fixed;bottom:105px;left:50%;transform:translateX(-50%);background:#1B4D3E;color:#fff;padding:10px 20px;border-radius:25px;font-size:13px;z-index:9999;font-family:'Tajawal',sans-serif;box-shadow:0 4px 15px rgba(0,0,0,.25);transition:opacity .3s;white-space:nowrap;max-width:90vw;text-align:center;opacity:0;pointer-events:none;}
+
+/* ── SPLASH SCREEN ── */
+#splash{
+  position:fixed;inset:0;z-index:9998;
+  background:linear-gradient(160deg,#0D2A1F 0%,#1B4D3E 45%,#0A1F16 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .7s ease, transform .7s ease;
+  overflow:hidden;
+}
+#splash.hide{opacity:0;transform:scale(1.04);pointer-events:none;}
+
+/* ornamen sudut */
+#splash::before,#splash::after{
+  content:'';position:absolute;
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.18) 0%,transparent 70%);
+}
+#splash::before{top:-80px;right:-80px;}
+#splash::after{bottom:-80px;left:-80px;}
+
+.sp-border{
+  width:88vw;max-width:340px;
+  border:2px solid rgba(201,168,76,.5);
+  border-radius:24px;
+  padding:36px 24px 30px;
+  text-align:center;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(8px);
+  position:relative;
+  box-shadow:0 0 60px rgba(201,168,76,.12), inset 0 0 30px rgba(0,0,0,.1);
+}
+/* sudut dekoratif */
+.sp-border::before,.sp-border::after{
+  content:'❖';position:absolute;color:rgba(201,168,76,.6);font-size:18px;
+}
+.sp-border::before{top:10px;left:14px;}
+.sp-border::after{bottom:10px;right:14px;}
+
+.sp-bismillah{
+  font-family:'Amiri',serif;
+  font-size:32px;
+  color:#F0D080;
+  direction:rtl;
+  line-height:1.8;
+  margin-bottom:6px;
+  text-shadow:0 2px 12px rgba(201,168,76,.4);
+  animation:glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow{from{text-shadow:0 2px 12px rgba(201,168,76,.3);}to{text-shadow:0 2px 24px rgba(201,168,76,.7);}}
+
+.sp-title-ar{
+  font-family:'Amiri',serif;
+  font-size:42px;
+  color:#fff;
+  direction:rtl;
+  line-height:1.6;
+  margin:8px 0 4px;
+  text-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.sp-sub-ar{
+  font-family:'Amiri',serif;
+  font-size:22px;
+  color:rgba(240,208,128,.8);
+  direction:rtl;
+  margin-bottom:18px;
+}
+.sp-divider{
+  width:60px;height:2px;
+  background:linear-gradient(to right,transparent,#C9A84C,transparent);
+  margin:0 auto 16px;
+}
+.sp-title-id{
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  color:#fff;
+  letter-spacing:1px;
+  margin-bottom:4px;
+}
+.sp-sub-id{
+  font-size:11px;
+  color:rgba(201,168,76,.8);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:22px;
+}
+.sp-dots{display:flex;gap:7px;justify-content:center;}
+.sp-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(201,168,76,.4);
+  animation:pulse 1.4s ease-in-out infinite;
+}
+.sp-dot:nth-child(2){animation-delay:.2s;}
+.sp-dot:nth-child(3){animation-delay:.4s;}
+@keyframes pulse{0%,100%{background:rgba(201,168,76,.3);transform:scale(1);}50%{background:rgba(201,168,76,.9);transform:scale(1.3);}}
+
+.sp-hadis{
+  font-family:'Amiri',serif;
+  font-size:14px;
+  color:rgba(255,255,255,.55);
+  direction:rtl;
+  margin-top:20px;
+  font-style:italic;
+  line-height:1.8;
+}
 </style>
 </head>
 <body>
+
+<!-- ══ SPLASH SCREEN ══ -->
+<div id="splash">
+  <div class="sp-border">
+    <div class="sp-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيْمِ</div>
+    <div class="sp-divider"></div>
+    <div class="sp-title-ar">كُتُبُ الْحَدِيْثِ</div>
+    <div class="sp-sub-ar">الشَّرِيْفِ النَّبَوِيِّ</div>
+    <div class="sp-divider"></div>
+    <div class="sp-title-id">HadisDigital</div>
+    <div class="sp-sub-id">Premium Edition</div>
+    <div class="sp-dots">
+      <div class="sp-dot"></div>
+      <div class="sp-dot"></div>
+      <div class="sp-dot"></div>
+    </div>
+    <div class="sp-hadis">خَيْرُ النَّاسِ أَنْفَعُهُمْ لِلنَّاسِ</div>
+  </div>
+</div>
 
 <header>
   <div class="logo">
@@ -932,9 +1055,29 @@ function showDonasi(){
 }
 
 // ─────────────────────────────────────────────
-// INIT
+// INIT — Splash muncul langsung, home diload setelah font siap
 // ─────────────────────────────────────────────
-window.onload = () => showHome();
+function hideSplash(){
+  const sp = document.getElementById('splash');
+  if(!sp) return;
+  sp.classList.add('hide');
+  setTimeout(() => { sp.style.display='none'; }, 750);
+}
+
+// Jalankan showHome segera (tidak tunggu window.onload)
+// Splash menutupi sementara konten disiapkan
+document.addEventListener('DOMContentLoaded', () => {
+  // Render home langsung
+  showHome();
+  // Sembunyikan splash setelah 2.2 detik (cukup untuk font load)
+  setTimeout(hideSplash, 2200);
+});
+
+// Fallback jika DOMContentLoaded sudah lewat
+if(document.readyState === 'interactive' || document.readyState === 'complete'){
+  showHome();
+  setTimeout(hideSplash, 2200);
+}
 </script>
 </body>
 </html>
